@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности — BeLove</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-deep: #b08d4f;
+            --gold-light: #e8d5b5;
+            --pink-light: #fce4ec;
+            --cream: #fffaf8;
+            --white: #ffffff;
+            --text-dark: #3d2c3b;
+            --text-muted: #8a7676;
+            --shadow-premium: 0 25px 60px rgba(176, 141, 79, 0.3);
+            --radius-premium: 32px;
+            --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-dark);
+            background: var(--cream);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== ШАПКА ===== */
+        header {
+            background: rgba(255, 250, 248, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 8px 24px rgba(176, 141, 79, 0.3);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(176, 141, 79, 0.45);
+        }
+
+        /* ===== СТРАНИЦА ===== */
+        .page {
+            padding: 60px 0 80px;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .page-date {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius-premium);
+            padding: 44px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .content-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            color: var(--gold-deep);
+            margin: 28px 0 14px;
+        }
+
+        .content-card h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .content-card h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            margin: 20px 0 10px;
+        }
+
+        .content-card p {
+            font-size: 15.5px;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+            line-height: 1.8;
+        }
+
+        .content-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 16px;
+        }
+
+        .content-card ul li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 15px;
+            color: var(--text-dark);
+            line-height: 1.6;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.06);
+        }
+
+        .content-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .content-card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            color: var(--gold-deep);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .content-card ul li strong {
+            color: var(--gold-deep);
+        }
+
+        .highlight-box {
+            background: rgba(248, 187, 208, 0.08);
+            border-left: 4px solid var(--gold);
+            padding: 18px 24px;
+            border-radius: 12px;
+            margin: 16px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .highlight-box strong {
+            color: var(--text-dark);
+        }
+
+        /* ===== ФУТЕР ===== */
+        footer {
+            background: rgba(61, 47, 47, 0.92);
+            backdrop-filter: blur(20px);
+            color: #f4e9e9;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            margin-top: 40px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .footer-inner a {
+            color: var(--gold-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-inner a:hover {
+            color: var(--gold);
+        }
+
+        .footer-inner span {
+            color: #a89494;
+            font-size: 14px;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 28px;
+            }
+            .content-card {
+                padding: 28px 20px;
+            }
+            .content-card h2 {
+                font-size: 22px;
+            }
+            .content-card p,
+            .content-card ul li {
+                font-size: 14px;
+            }
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            .logo-img {
+                height: 48px;
+            }
+            .btn-back {
+                font-size: 13px;
+                padding: 10px 22px;
+            }
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page {
+                padding: 40px 0 60px;
+            }
+            .page-title {
+                font-size: 24px;
+            }
+            .content-card {
+                padding: 20px 16px;
+            }
+            .content-card h2 {
+                font-size: 19px;
+            }
+            .content-card ul li {
+                padding: 6px 0 6px 22px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ШАПКА ===== -->
+    <header>
+        <div class="header-inner">
+            <a href="index.html">
+                <img src="Logo.png" alt="BeLove" class="logo-img" onerror="this.style.display='none'">
+            </a>
+            <a href="index.html" class="btn-back">← На главную</a>
+        </div>
+    </header>
+
+    <!-- ===== СТРАНИЦА ===== -->
+    <section class="page">
+        <div class="container">
+            <h1 class="page-title">🔒 Политика конфиденциальности</h1>
+            <span class="page-date">Актуально на: 04 июля 2026 г.</span>
+
+            <div class="content-card">
+
+                <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных посетителей сайта BeLove (далее — «Сайт»).</p>
+
+                <h2>1. Какие данные мы собираем</h2>
+                <ul>
+                    <li><strong>Имя и контактный телефон</strong> — для записи на процедуру и обратной связи.</li>
+                    <li><strong>Данные об услугах</strong> — выбранные зоны эпиляции для подбора программы.</li>
+                    <li><strong>IP-адрес и данные cookie</strong> — для аналитики и улучшения работы сайта.</li>
+                </ul>
+
+                <h2>2. Как мы используем ваши данные</h2>
+                <ul>
+                    <li>Для записи на процедуру и связи с вами.</li>
+                    <li>Для информирования о предстоящих визитах и специальных предложениях.</li>
+                    <li>Для улучшения качества обслуживания и работы сайта.</li>
+                </ul>
+
+                <h2>3. Передача данных третьим лицам</h2>
+                <p>Ваши персональные данные не передаются третьим лицам, за исключением случаев, предусмотренных законодательством РФ.</p>
+
+                <h2>4. Ваши права</h2>
+                <ul>
+                    <li>Вы можете запросить информацию о своих данных.</li>
+                    <li>Вы можете потребовать удалить или изменить свои данные.</li>
+                    <li>Вы можете отозвать согласие на обработку данных в любой момент.</li>
+                </ul>
+
+                <h2>5. Срок хранения данных</h2>
+                <p>Ваши персональные данные хранятся в течение срока, необходимого для выполнения целей обработки, но не более 5 лет с момента последнего обращения.</p>
+
+                <div class="highlight-box">
+                    <p><strong>📧 Контакты для вопросов:</strong> Вы можете связаться с нами по телефону <strong>+7 999 620 8376</strong> или через мессенджеры.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer>
+        <div class="footer-inner">
+            <span>© 2026 BeLove. Все права защищены.</span>
+            <a href="index.html">Главная</a>
+            <a href="protivopokazaniya.html">Противопоказания</a>
+            <a href="politika.html" style="color:var(--gold);font-weight:600;">Политика конфиденциальности</a>
+            <a href="obrabotka.html">Обработка данных</a>
+        </div>
+    </footer>
+
+</body>
+</html>

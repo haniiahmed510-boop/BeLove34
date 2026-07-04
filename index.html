@@ -1,0 +1,2348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeLove — Студия лазерной эпиляции</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+                   ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+                   ============================================================ */
+        :root {
+            --gold: #c9a96e;
+            --gold-deep: #b08d4f;
+            --gold-light: #e8d5b5;
+            --pink-light: #fce4ec;
+            --pink-mid: #f8bbd0;
+            --cream: #fffaf8;
+            --white: #ffffff;
+            --text-dark: #3d2c3b;
+            --text-muted: #8a7676;
+            --shadow-premium: 0 25px 60px rgba(176, 141, 79, 0.3);
+            --radius-premium: 32px;
+            --transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-dark);
+            background: var(--cream);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ============================================================
+                   3D-ФОН И ЧАСТИЦЫ
+                   ============================================================ */
+        .sphere-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .sphere {
+            position: absolute;
+            border-radius: 50%;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+            backdrop-filter: blur(60px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .sphere-1 {
+            width: 700px;
+            height: 700px;
+            top: -250px;
+            right: -200px;
+            background: radial-gradient(circle at 25% 25%, rgba(201, 169, 110, 0.3), rgba(248, 187, 208, 0.06));
+            animation: sphere3D_1 28s ease-in-out infinite;
+        }
+
+        .sphere-2 {
+            width: 550px;
+            height: 550px;
+            bottom: -150px;
+            left: -150px;
+            background: radial-gradient(circle at 70% 70%, rgba(248, 187, 208, 0.25), rgba(201, 169, 110, 0.04));
+            animation: sphere3D_2 32s ease-in-out infinite;
+        }
+
+        .sphere-3 {
+            width: 450px;
+            height: 450px;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(20deg);
+            background: radial-gradient(circle at 50% 50%, rgba(232, 213, 181, 0.15), rgba(252, 228, 236, 0.02));
+            animation: sphere3D_3 24s ease-in-out infinite;
+        }
+
+        .sphere-4 {
+            width: 350px;
+            height: 350px;
+            top: 10%;
+            left: 5%;
+            background: radial-gradient(circle at 60% 40%, rgba(201, 169, 110, 0.12), rgba(248, 187, 208, 0.02));
+            animation: sphere3D_4 20s ease-in-out infinite;
+        }
+
+        @keyframes sphere3D_1 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg) rotateX(0deg) rotateY(0deg); }
+            25% { transform: translate(-100px,60px) scale(1.15) rotate(8deg) rotateX(10deg) rotateY(-5deg); }
+            50% { transform: translate(80px,-50px) scale(0.9) rotate(-6deg) rotateX(-8deg) rotateY(8deg); }
+            75% { transform: translate(-60px,-80px) scale(1.05) rotate(4deg) rotateX(5deg) rotateY(-10deg); }
+        }
+
+        @keyframes sphere3D_2 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg) rotateX(0deg) rotateY(0deg); }
+            30% { transform: translate(120px,-70px) scale(1.1) rotate(-7deg) rotateX(-12deg) rotateY(6deg); }
+            60% { transform: translate(-80px,60px) scale(0.85) rotate(9deg) rotateX(8deg) rotateY(-7deg); }
+            85% { transform: translate(60px,90px) scale(1.08) rotate(-4deg) rotateX(-6deg) rotateY(12deg); }
+        }
+
+        @keyframes sphere3D_3 {
+            0%, 100% { transform: translate(-50%,-50%) scale(1) rotate(0deg) rotateX(20deg) rotateY(0deg); }
+            50% { transform: translate(-50%,-55%) scale(1.12) rotate(6deg) rotateX(10deg) rotateY(15deg); }
+        }
+
+        @keyframes sphere3D_4 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
+            33% { transform: translate(40px,-30px) scale(1.2) rotate(12deg); }
+            66% { transform: translate(-30px,40px) scale(0.8) rotate(-8deg); }
+        }
+
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 800px;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f0d5a0, var(--gold-deep));
+            opacity: 0;
+            box-shadow: 0 0 30px rgba(201, 169, 110, 0.4);
+            animation: particle3D linear infinite;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+        }
+
+        .particle:nth-child(odd) {
+            background: radial-gradient(circle at 30% 30%, #ffd6b0, #c9a96e);
+        }
+        .particle:nth-child(3n) {
+            background: radial-gradient(circle at 30% 30%, #fce4ec, #e8a0b8);
+            box-shadow: 0 0 30px rgba(248, 187, 208, 0.3);
+        }
+
+        @keyframes particle3D {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg) translateX(0) translateZ(0px);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.8;
+                transform: translateY(90vh) scale(0.6) rotate(20deg) translateX(10px) translateZ(30px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(50vh) scale(1) rotate(360deg) translateX(-30px) translateZ(60px);
+            }
+            92% {
+                opacity: 0.6;
+                transform: translateY(10vh) scale(0.7) rotate(720deg) translateX(20px) translateZ(20px);
+            }
+            100% {
+                transform: translateY(-10vh) scale(0) rotate(900deg) translateX(-10px) translateZ(0px);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================================
+                   ШАПКА
+                   ============================================================ */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 250, 248, 0.88);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+            transform-style: preserve-3d;
+        }
+
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        .logo-img {
+            height: 72px;
+            width: auto;
+            transition: var(--transition);
+            object-fit: contain;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.05));
+        }
+
+        .logo-img:hover {
+            transform: scale(1.06) rotateY(-3deg) translateZ(10px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-size: 14.5px;
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            position: relative;
+            padding: 4px 0;
+            transition: color 0.3s ease;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: var(--gold-deep);
+            transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-deep);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-phone a {
+            font-weight: 800;
+            font-size: 15.5px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-phone span {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+            text-align: right;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            transition: var(--transition);
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .social-icon.wa {
+            background: #25D366;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .social-icon.wa:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+        }
+
+        .social-icon.tg {
+            background: #0088cc;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+        }
+
+        .social-icon.tg:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 136, 204, 0.4);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(176, 141, 79, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.03) translateZ(10px);
+            box-shadow: 0 20px 45px rgba(176, 141, 79, 0.5);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #fff;
+            box-shadow: 0 10px 24px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-4px) scale(1.03) translateZ(10px);
+            box-shadow: 0 18px 38px rgba(37, 211, 102, 0.5);
+        }
+
+        .btn-tg {
+            background: #0088cc;
+            color: #fff;
+            box-shadow: 0 10px 24px rgba(0, 136, 204, 0.35);
+        }
+
+        .btn-tg:hover {
+            transform: translateY(-4px) scale(1.03) translateZ(10px);
+            box-shadow: 0 18px 38px rgba(0, 136, 204, 0.5);
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .burger span {
+            width: 26px;
+            height: 2px;
+            background: var(--text-dark);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ============================================================
+                   ГЕРОЙ
+                   ============================================================ */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .hero-image-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            background: linear-gradient(145deg, #2d1f2b 0%, #4a2f3a 30%, #6b4a5a 60%, #8a6a7a 85%, #c9a96e 100%);
+        }
+
+        .hero-image-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.35) saturate(0.85) contrast(1.05);
+            transform: scale(1.05) rotateX(2deg);
+            animation: heroImage3D 25s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+
+        .hero-image-bg img[style*="display: none"] {
+            display: none !important;
+        }
+
+        .hero-image-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(176, 141, 79, 0.2), transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(248, 187, 208, 0.12), transparent 40%),
+                linear-gradient(135deg, rgba(61, 44, 59, 0.3) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        .hero-image-bg .glow-ring {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-image-bg .glow-ring-1 {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.1), transparent 70%);
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+
+        .hero-image-bg .glow-ring-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            left: -50px;
+            background: radial-gradient(circle, rgba(248, 187, 208, 0.08), transparent 70%);
+            animation: glowPulse 12s ease-in-out infinite reverse;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.3) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes heroImage3D {
+            0% {
+                transform: scale(1.05) rotateX(2deg) rotateY(0deg) translate(0, 0);
+            }
+            33% {
+                transform: scale(1.10) rotateX(1deg) rotateY(3deg) translate(-12px, -8px);
+            }
+            66% {
+                transform: scale(1.08) rotateX(-1deg) rotateY(-2deg) translate(10px, 12px);
+            }
+            100% {
+                transform: scale(1.12) rotateX(2deg) rotateY(1deg) translate(-8px, -10px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 700px;
+            padding: 40px 0;
+            transform-style: preserve-3d;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transform: translateZ(20px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-badge::before {
+            content: '✦';
+            font-size: 16px;
+            color: var(--gold-light);
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5.5vw, 58px);
+            line-height: 1.08;
+            margin-bottom: 16px;
+            color: #fff;
+            text-shadow: 0 4px 60px rgba(0, 0, 0, 0.3), 0 2px 20px rgba(0, 0, 0, 0.1);
+            transform: translateZ(30px);
+        }
+
+        .hero h1 span {
+            color: var(--gold-light);
+            font-style: italic;
+            text-shadow: 0 0 40px rgba(201, 169, 110, 0.15);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 560px;
+            margin-bottom: 32px;
+            text-shadow: 0 2px 30px rgba(0, 0, 0, 0.15);
+            transform: translateZ(15px);
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            transform: translateZ(25px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            transform: translateZ(10px);
+        }
+
+        .hero-stats .stat .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--gold-light);
+            display: block;
+            text-shadow: 0 0 30px rgba(201, 169, 110, 0.1);
+        }
+
+        .hero-stats .stat .label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        /* ============================================================
+                   СЕКЦИИ
+                   ============================================================ */
+        .section {
+            position: relative;
+            z-index: 1;
+            padding: 100px 0;
+            transform-style: preserve-3d;
+        }
+
+        .section-glass {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .section-title {
+            font-size: clamp(30px, 4vw, 44px);
+            margin-bottom: 14px;
+        }
+
+        .section-sub {
+            color: var(--text-muted);
+            font-size: 17px;
+            max-width: 560px;
+            margin-bottom: 48px;
+        }
+
+        .center {
+            text-align: center;
+        }
+        .center .section-sub {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold-deep);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 30px;
+            height: 1.5px;
+            background: var(--gold-deep);
+            display: inline-block;
+        }
+
+        /* ============================================================
+                   4 ПРИЧИНЫ
+                   ============================================================ */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        .why-card {
+            padding: 40px 28px;
+            border-radius: var(--radius-premium);
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            transform-style: preserve-3d;
+            transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+            will-change: transform;
+        }
+
+        .why-card:hover {
+            transform: perspective(800px) rotateX(4deg) rotateY(6deg) translateZ(20px);
+            box-shadow: var(--shadow-premium);
+            border-color: var(--gold-light);
+        }
+
+        .why-icon {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink-light), var(--pink-mid));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 8px 24px rgba(248, 187, 208, 0.2);
+            transform: translateZ(15px);
+        }
+
+        .why-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            transform: translateZ(10px);
+        }
+
+        .why-card p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+        }
+
+        /* ============================================================
+                   ЭТАПЫ
+                   ============================================================ */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .step-card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            padding: 30px 20px;
+            border-radius: var(--radius-premium);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: var(--transition);
+            transform-style: preserve-3d;
+            transform: perspective(600px) rotateX(0deg);
+            will-change: transform;
+        }
+
+        .step-card:hover {
+            transform: perspective(600px) rotateX(3deg) translateZ(15px);
+            background: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(176, 141, 79, 0.3);
+            transform: translateZ(20px);
+        }
+
+        /* ============================================================
+                   ПРАЙС
+                   ============================================================ */
+        .price-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .price-image {
+            border-radius: var(--radius-premium);
+            overflow: hidden;
+            box-shadow: var(--shadow-premium);
+            height: 100%;
+            min-height: 400px;
+            background: var(--cream);
+        }
+
+        .price-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .price-image img:hover {
+            transform: scale(1.03);
+        }
+
+        .price-table-wrap {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius-premium);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .price-table thead th {
+            text-align: left;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: var(--gold-deep);
+            background: rgba(248, 187, 208, 0.1);
+            padding: 20px 32px;
+        }
+
+        .price-table thead th:last-child {
+            text-align: right;
+        }
+
+        .price-table tbody td {
+            padding: 16px 32px;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.05);
+        }
+
+        .price-table tbody tr:hover {
+            background: rgba(248, 187, 208, 0.06);
+        }
+
+        .price-table td.zone {
+            font-weight: 600;
+        }
+
+        .price-table td.cost {
+            text-align: right;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--gold-deep);
+        }
+
+        /* ============================================================
+                   ПАКЕТЫ
+                   ============================================================ */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 26px;
+        }
+
+        .package-card {
+            padding: 36px 28px 30px;
+            border-radius: var(--radius-premium);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: var(--transition);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            transform: perspective(600px) rotateX(0deg);
+            will-change: transform;
+            position: relative;
+        }
+
+        .package-card:hover {
+            transform: perspective(600px) rotateX(3deg) rotateY(4deg) translateZ(20px);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .package-card.featured {
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.7), rgba(248, 187, 208, 0.12));
+            border: 1.5px solid var(--gold);
+        }
+
+        .featured-tag {
+            position: absolute;
+            top: -14px;
+            right: 24px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 8px 18px;
+            border-radius: 50px;
+            box-shadow: 0 8px 18px rgba(176, 141, 79, 0.4);
+            transform: translateZ(30px);
+        }
+
+        .package-card h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+
+        .package-price {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px dashed rgba(201, 169, 110, 0.15);
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .package-price .amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gold-deep);
+        }
+
+        /* ============================================================
+                   СЕРТИФИКАТЫ
+                   ============================================================ */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .cert-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius-premium);
+            padding: 34px 26px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: var(--transition);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            transform-style: preserve-3d;
+            transform: perspective(500px) rotateX(0deg);
+            will-change: transform;
+        }
+
+        .cert-card:hover {
+            transform: perspective(500px) rotateX(3deg) rotateY(5deg) translateZ(15px);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .cert-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            transform: translateZ(15px);
+        }
+
+        .cert-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gold-deep);
+        }
+
+        .cert-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 6px 0 20px;
+        }
+
+        /* ============================================================
+                   ОТЗЫВЫ
+                   ============================================================ */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius-premium);
+            padding: 32px 28px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: var(--transition);
+            transform-style: preserve-3d;
+            transform: perspective(500px) rotateX(0deg);
+            will-change: transform;
+            text-align: left;
+        }
+
+        .review-card:hover {
+            transform: perspective(500px) rotateX(3deg) translateZ(15px);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .review-stars {
+            color: var(--gold);
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .review-text {
+            font-size: 15px;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .review-author {
+            font-weight: 700;
+            color: var(--gold-deep);
+            font-size: 14px;
+        }
+
+        /* ============================================================
+                   FAQ
+                   ============================================================ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-premium);
+            padding: 28px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .faq-item:hover {
+            border-color: var(--gold-light);
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateZ(10px);
+        }
+
+        .faq-item .question {
+            font-weight: 700;
+            font-size: 17px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item .question .icon {
+            font-size: 22px;
+            color: var(--gold-deep);
+            transition: transform 0.4s ease;
+        }
+
+        .faq-item .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .faq-item.open .answer {
+            max-height: 200px;
+            padding-top: 16px;
+        }
+
+        .faq-item.open .question .icon {
+            transform: rotate(180deg);
+        }
+
+        /* ============================================================
+                   КОНТАКТЫ
+                   ============================================================ */
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: var(--radius-premium);
+            padding: 40px 34px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+            transition: var(--transition);
+            transform-style: preserve-3d;
+            transform: perspective(500px) rotateX(0deg);
+            will-change: transform;
+        }
+
+        .contact-card:hover {
+            transform: perspective(500px) rotateX(3deg) translateZ(15px);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .contact-card .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .contact-card h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .contact-card a {
+            color: var(--gold-deep);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .contact-card a:hover {
+            color: var(--gold);
+        }
+
+        .contact-card p {
+            color: var(--text-muted);
+            font-size: 14.5px;
+        }
+
+        /* ============================================================
+                   ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ (АККОРДЕОН)
+                   ============================================================ */
+        .legal-wrapper {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-premium);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .legal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 34px;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .legal-header:hover {
+            background: rgba(201, 169, 110, 0.05);
+        }
+
+        .legal-header h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .legal-header .arrow {
+            font-size: 22px;
+            color: var(--gold-deep);
+            transition: transform 0.4s ease;
+        }
+
+        .legal-header .arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .legal-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), padding 0.6s ease;
+            padding: 0 34px;
+        }
+
+        .legal-body.open {
+            max-height: 4000px;
+            padding: 0 34px 34px;
+        }
+
+        .legal-body .legal-section {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.08);
+        }
+
+        .legal-body .legal-section:last-child {
+            border-bottom: none;
+        }
+
+        .legal-body .legal-section h4 {
+            font-size: 18px;
+            color: var(--gold-deep);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legal-body .legal-section p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .legal-body .legal-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .legal-body .legal-section strong {
+            color: var(--text-dark);
+        }
+
+        .legal-body .legal-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 12px;
+        }
+
+        .legal-body .legal-section ul li {
+            padding: 6px 0 6px 24px;
+            position: relative;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .legal-body .legal-section ul li::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            color: var(--gold-deep);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .legal-body .legal-section ul li strong {
+            color: var(--text-dark);
+        }
+
+        .legal-body .highlight-box {
+            background: rgba(248, 187, 208, 0.08);
+            border-left: 4px solid var(--gold);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 12px 0;
+        }
+
+        .legal-body .highlight-box p {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        .legal-body .highlight-box strong {
+            color: var(--text-dark);
+        }
+
+        .legal-body .legal-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 12px 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .legal-body .legal-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            margin-top: 2px;
+            accent-color: var(--gold-deep);
+            cursor: pointer;
+        }
+
+        /* ============================================================
+                   COOKIE БАННЕР
+                   ============================================================ */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(61, 47, 47, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 18px 24px;
+            border-top: 1px solid rgba(201, 169, 110, 0.15);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .cookie-banner.show {
+            display: flex;
+        }
+
+        .cookie-banner p {
+            color: #e6d5d5;
+            font-size: 14px;
+            max-width: 700px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .cookie-banner a {
+            color: var(--gold-light);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.3);
+        }
+
+        .cookie-banner a:hover {
+            color: var(--gold);
+        }
+
+        .cookie-banner .btn-cookie {
+            background: var(--gold);
+            color: #fff;
+            border: none;
+            padding: 10px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .cookie-banner .btn-cookie:hover {
+            background: var(--gold-deep);
+            transform: scale(1.03);
+        }
+
+        /* ============================================================
+                   ФУТЕР
+                   ============================================================ */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(61, 47, 47, 0.92);
+            backdrop-filter: blur(24px);
+            color: #f4e9e9;
+            padding: 80px 0 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1fr 1.1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo-img {
+            height: 64px;
+            width: auto;
+            margin-bottom: 14px;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+
+        .footer-grid p {
+            color: #cbb8b8;
+            font-size: 14.5px;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+            font-weight: 800;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: #e6d5d5;
+            font-size: 14.5px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--gold);
+            padding-left: 4px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .footer-social a {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 22px;
+            text-decoration: none;
+            color: #e6d5d5;
+        }
+
+        .footer-social a:hover {
+            background: var(--gold);
+            transform: translateY(-4px) scale(1.05);
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px 24px;
+            font-size: 13px;
+            color: #a89494;
+            text-align: center;
+        }
+
+        .footer-bottom a {
+            color: var(--gold-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-bottom a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom .developer {
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        .footer-bottom .developer a {
+            color: #25D366;
+            font-weight: 700;
+        }
+
+        .footer-bottom .developer a:hover {
+            color: var(--gold);
+        }
+
+        /* ============================================================
+                   WHATSAPP FLOAT
+                   ============================================================ */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 900;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
+            animation: waPulse3D 2.4s infinite;
+            transition: var(--transition);
+            text-decoration: none;
+            font-size: 32px;
+            color: #fff;
+            transform-style: preserve-3d;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.12) translateZ(20px);
+            box-shadow: 0 20px 45px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes waPulse3D {
+            0%, 100% {
+                box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
+                transform: scale(1) translateZ(0);
+            }
+            50% {
+                box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45), 0 0 0 16px rgba(37, 211, 102, 0.1);
+                transform: scale(1.05) translateZ(10px);
+            }
+        }
+
+        /* ============================================================
+                   АДАПТИВНОСТЬ
+                   ============================================================ */
+        @media (max-width: 980px) {
+            .nav-links {
+                display: none;
+            }
+            .nav-phone {
+                display: none;
+            }
+            .burger {
+                display: flex;
+            }
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cert-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .reviews-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-stats {
+                gap: 24px;
+                flex-wrap: wrap;
+            }
+            .price-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .price-image {
+                min-height: 200px;
+            }
+
+            .nav-links.open {
+                display: flex !important;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 250, 248, 0.98);
+                backdrop-filter: blur(24px);
+                flex-direction: column;
+                padding: 24px 30px;
+                gap: 18px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+                border-bottom: 1px solid rgba(201, 169, 110, 0.08);
+            }
+
+            .burger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .burger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .burger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .cookie-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 16px 20px;
+            }
+            .cookie-banner .btn-cookie {
+                width: 100%;
+            }
+            .legal-header {
+                padding: 18px 20px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .legal-header h3 {
+                font-size: 16px;
+            }
+            .legal-body.open {
+                padding: 0 20px 20px;
+            }
+            .legal-body .legal-section {
+                padding: 16px 0;
+            }
+            .legal-body .legal-section ul li {
+                font-size: 13px;
+            }
+            .footer-bottom {
+                gap: 10px 16px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .price-table-wrap {
+                overflow-x: auto;
+            }
+            .price-table tbody td,
+            .price-table thead th {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            .hero {
+                min-height: auto;
+                padding: 100px 0 60px;
+            }
+            .hero h1 {
+                font-size: 30px;
+            }
+            .hero-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .section {
+                padding: 60px 0;
+            }
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-wrap {
+                padding: 12px 16px;
+            }
+            .logo-img {
+                height: 52px;
+            }
+            .footer-logo-img {
+                height: 52px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                font-size: 12px;
+            }
+            .burger {
+                display: flex;
+            }
+            .social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .legal-header {
+                padding: 14px 16px;
+            }
+            .legal-header h3 {
+                font-size: 14px;
+            }
+            .legal-body.open {
+                padding: 0 16px 16px;
+            }
+            .legal-body .legal-section h4 {
+                font-size: 16px;
+            }
+            .legal-body .legal-section p {
+                font-size: 13px;
+            }
+            .legal-body .legal-checkbox {
+                font-size: 13px;
+            }
+            .legal-body .legal-section ul li {
+                font-size: 13px;
+                padding: 5px 0 5px 20px;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .burger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 3D-ФОН ===== -->
+    <div class="sphere-overlay">
+        <div class="sphere sphere-1"></div>
+        <div class="sphere sphere-2"></div>
+        <div class="sphere sphere-3"></div>
+        <div class="sphere sphere-4"></div>
+    </div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- ===== ШАПКА ===== -->
+    <header>
+        <div class="nav-wrap">
+            <a href="#top">
+                <img src="logo.png" alt="BeLove" class="logo-img" onerror="this.style.display='none'">
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#why">О нас</a>
+                <a href="#price">Цены</a>
+                <a href="#packages">Пакеты</a>
+                <a href="#certificates">Сертификаты</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
+            <div class="nav-cta">
+                <div class="nav-phone">
+                    <span>Звоните нам</span>
+                    <a href="tel:+79996208376">+7 999 620 8376</a>
+                </div>
+                <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="social-icon wa" aria-label="WhatsApp">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                </a>
+                <a href="https://t.me/alina1467" target="_blank" class="social-icon tg" aria-label="Telegram">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </a>
+                <div class="burger" id="burgerBtn">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРОЙ ===== -->
+    <section class="hero" id="top">
+        <div class="hero-image-bg">
+            <img src="banner.jpg" alt="BeLove баннер" loading="lazy" onerror="this.style.display='none'">
+            <div class="glow-ring glow-ring-1"></div>
+            <div class="glow-ring glow-ring-2"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">Студия премиум-класса</div>
+                <h1>Лазерная эпиляция<br>на диодном аппарате<br><span>нового поколения</span></h1>
+                <p>Благодаря системе охлаждения вы полюбите нашу процедуру с первой минуты.</p>
+                <div class="hero-actions">
+                    <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="btn btn-whatsapp">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                        Записаться в WhatsApp
+                    </a>
+                    <a href="https://t.me/alina1467" target="_blank" class="btn btn-tg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        Связаться в Telegram
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat"><span class="number">5000+</span><span class="label">Довольных клиенток</span></div>
+                    <div class="stat"><span class="number">4.9 ★</span><span class="label">Средняя оценка</span></div>
+                    <div class="stat"><span class="number">8 лет</span><span class="label">Опыта работы</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 4 ПРИЧИНЫ ===== -->
+    <section class="section section-glass" id="why">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">почему BeLove</div>
+                <h2 class="section-title">4 причины выбрать нас</h2>
+                <p class="section-sub">Мы создали пространство, где каждая деталь работает на ваш комфорт и безопасность.</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">🛡️</div>
+                    <h3>Абсолютная безопасность</h3>
+                    <p>Сертифицированный диодный лазер, стерильные расходники</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">😌</div>
+                    <h3>Максимальный комфорт</h3>
+                    <p>Уютная студия с расслабляющей атмосферой</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">✨</div>
+                    <h3>Видимый результат</h3>
+                    <p>До 95% сокращения роста волос</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">👩‍⚕️</div>
+                    <h3>Профессиональный подход</h3>
+                    <p>Специалист с медицинским образованием</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ЭТАПЫ ===== -->
+    <section class="section" id="steps">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">как мы работаем</div>
+                <h2 class="section-title">4 шага к гладкой коже</h2>
+                <p class="section-sub">Прозрачный и комфортный процесс без сюрпризов</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Консультация</h4>
+                    <p>Бесплатная встреча и подбор программы</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Подготовка</h4>
+                    <p>Индивидуальный уход перед процедурой</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Процедура</h4>
+                    <p>Безболезненный сеанс 15–60 минут</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Забота после</h4>
+                    <p>Рекомендации по уходу и контроль</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ПРАЙС ===== -->
+    <section class="section section-glass" id="price">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">прайс-лист</div>
+                <h2 class="section-title">Цены на отдельные зоны</h2>
+                <p class="section-sub">Прозрачная стоимость без скрытых доплат.</p>
+            </div>
+            <div class="price-wrapper">
+                <div class="price-image">
+                    <img src="price.jpg" alt="Прайс-лист" loading="lazy" onerror="this.style.display='none'">
+                </div>
+                <div class="price-table-wrap">
+                    <table class="price-table">
+                        <thead><tr><th>Зона</th><th>Цена</th></tr></thead>
+                        <tbody id="priceTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ПАКЕТЫ ===== -->
+    <section class="section" id="packages">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">выгодные предложения</div>
+                <h2 class="section-title">Комплексные пакеты</h2>
+                <p class="section-sub">Сочетайте зоны и экономьте до 40%</p>
+            </div>
+            <div class="packages-grid" id="packagesGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===== СЕРТИФИКАТЫ ===== -->
+    <section class="section section-glass" id="certificates">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">подарок красоты</div>
+                <h2 class="section-title">Подарочные сертификаты</h2>
+                <p class="section-sub">Идеальный подарок для близких</p>
+            </div>
+            <div class="cert-grid" id="certGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===== ОТЗЫВЫ ===== -->
+    <section class="section" id="reviews">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">мнение клиентов</div>
+                <h2 class="section-title">Отзывы о нас</h2>
+                <p class="section-sub">Реальные слова наших клиенток</p>
+            </div>
+            <div class="reviews-grid" id="reviewsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section section-glass" id="faq">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">ответы на вопросы</div>
+                <h2 class="section-title">Часто задаваемые вопросы</h2>
+                <p class="section-sub">Всё, что вы хотели знать</p>
+            </div>
+            <div class="faq-grid" id="faqGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="section" id="contacts">
+        <div class="container">
+            <div class="center">
+                <div class="eyebrow">свяжитесь с нами</div>
+                <h2 class="section-title">Контакты</h2>
+                <p class="section-sub">Мы всегда на связи и готовы ответить на ваши вопросы</p>
+            </div>
+            <div class="contacts-grid">
+                <div class="contact-card">
+                    <span class="icon">📞</span>
+                    <h3>Телефон</h3>
+                    <a href="tel:+79996208376">+7 999 620 8376</a>
+                </div>
+                <div class="contact-card">
+                    <span class="icon">📍</span>
+                    <h3>Адрес</h3>
+                    <a href="https://yandex.ru/maps/?text=Ленинский+проспект+41/2" target="_blank">Ленинский проспект 41/2</a>
+                    <p>Построить маршрут 🗺️</p>
+                </div>
+                <div class="contact-card">
+                    <span class="icon">💬</span>
+                    <h3>WhatsApp</h3>
+                    <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank">Написать в WhatsApp</a>
+                </div>
+                <div class="contact-card">
+                    <span class="icon">✈️</span>
+                    <h3>Telegram</h3>
+                    <a href="https://t.me/alina1467" target="_blank">@alina1467</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+               ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ (ВНИЗУ СТРАНИЦЫ)
+               ============================================================ -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <div class="legal-wrapper">
+                <!-- КНОПКА-ЗАГОЛОВОК -->
+                <div class="legal-header" onclick="toggleLegal()">
+                    <h3>📜 Юридическая информация</h3>
+                    <span class="arrow" id="legalArrow">▾</span>
+                </div>
+
+                <!-- ТЕЛО С ЗАКОНАМИ -->
+                <div class="legal-body" id="legalBody">
+
+                    <!-- ===== 1. ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ ===== -->
+                    <div class="legal-section">
+                        <h4>🔒 Политика конфиденциальности</h4>
+                        <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
+                        <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных посетителей сайта BeLove.</p>
+
+                        <p><strong>Какие данные мы собираем:</strong></p>
+                        <ul>
+                            <li><strong>Имя и контактный телефон</strong> — для записи на процедуру и обратной связи.</li>
+                            <li><strong>Данные об услугах</strong> — выбранные зоны эпиляции для подбора программы.</li>
+                            <li><strong>IP-адрес и данные cookie</strong> — для аналитики и улучшения работы сайта.</li>
+                        </ul>
+
+                        <p><strong>Как мы используем ваши данные:</strong></p>
+                        <ul>
+                            <li>Для записи на процедуру и связи с вами.</li>
+                            <li>Для информирования о предстоящих визитах и специальных предложениях.</li>
+                            <li>Для улучшения качества обслуживания и работы сайта.</li>
+                        </ul>
+
+                        <p><strong>Передача данных третьим лицам:</strong> Ваши персональные данные не передаются третьим лицам, за исключением случаев, предусмотренных законодательством РФ.</p>
+
+                        <p><strong>Ваши права:</strong></p>
+                        <ul>
+                            <li>Вы можете запросить информацию о своих данных.</li>
+                            <li>Вы можете потребовать удалить или изменить свои данные.</li>
+                            <li>Вы можете отозвать согласие на обработку данных в любой момент.</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <p><strong>📧 Контакты для вопросов:</strong> +7 999 620 8376 или через мессенджеры.</p>
+                        </div>
+                    </div>
+
+                    <!-- ===== 2. СОГЛАСИЕ НА ОБРАБОТКУ ПД ===== -->
+                    <div class="legal-section">
+                        <h4>✍️ Согласие на обработку персональных данных</h4>
+                        <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
+                        <p>Отправляя форму на сайте BeLove, вы даете свое <strong>свободное, информированное и однозначное согласие</strong> на обработку своих персональных данных.</p>
+
+                        <p><strong>Что вы подтверждаете:</strong></p>
+                        <ul>
+                            <li>Вы ознакомлены с настоящим согласием и понимаете его условия.</li>
+                            <li>Вы даете согласие на обработку ваших персональных данных, включая имя и телефон.</li>
+                            <li>Вы соглашаетесь на получение сообщений от BeLove по указанным контактным данным.</li>
+                            <li>Вы даете согласие на общение в мессенджерах (WhatsApp, Telegram).</li>
+                        </ul>
+
+                        <p><strong>Срок действия согласия:</strong> Согласие действует с момента его предоставления и до момента его отзыва в письменной форме.</p>
+                    </div>
+
+                    <!-- ===== 3. СОГЛАСИЕ НА ОБЩЕНИЕ В МЕССЕНДЖЕРАХ ===== -->
+                    <div class="legal-section">
+                        <h4>💬 Согласие на общение в мессенджерах</h4>
+                        <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
+                        <p>Оставляя свои контактные данные на сайте BeLove, вы соглашаетесь на получение сообщений в мессенджерах <strong>WhatsApp и Telegram</strong>.</p>
+
+                        <ul>
+                            <li>Сообщения могут содержать информацию о записи, подтверждении визита и специальных предложениях.</li>
+                            <li>Вы можете отказаться от получения сообщений в любое время.</li>
+                            <li>Ссылки на мессенджеры предназначены для коммуникации с клиентами, которые предоставили письменное согласие.</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <p><strong>⚠️ Важно:</strong> Переходя по ссылке на общение в мессенджерах при отсутствии согласия, вся ответственность за это возлагается на клиента.</p>
+                        </div>
+                    </div>
+
+                    <!-- ===== 4. ПРОТИВОПОКАЗАНИЯ ===== -->
+                    <div class="legal-section">
+                        <h4>⚠️ Противопоказания к лазерной эпиляции</h4>
+                        <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
+
+                        <div class="highlight-box" style="border-left-color:#d98a8a; background:rgba(217,138,138,0.06);">
+                            <p><strong>На указанные на настоящем сайте услуги могут быть противопоказания, необходима консультация специалиста.</strong></p>
+                        </div>
+
+                        <p><strong>Абсолютные противопоказания:</strong></p>
+                        <ul>
+                            <li><strong>Системные заболевания:</strong> сахарный диабет, ВИЧ, СПИД.</li>
+                            <li><strong>Онкологические заболевания</strong> любой локализации.</li>
+                            <li><strong>Неврологические заболевания:</strong> эпилепсия.</li>
+                            <li><strong>Психические расстройства:</strong> шизофрения.</li>
+                            <li><strong>Беременность</strong> на любом сроке.</li>
+                            <li><strong>Грудное вскармливание</strong> (до 6 месяцев).</li>
+                            <li><strong>Болезни крови:</strong> нарушение свертываемости.</li>
+                            <li><strong>Тромбофлебит</strong> и варикоз в прогрессирующей стадии.</li>
+                            <li><strong>Свежий загар</strong> (от 1 до 2 недель до процедуры).</li>
+                        </ul>
+
+                        <p><strong>Относительные противопоказания:</strong></p>
+                        <ul>
+                            <li>Острые респираторные заболевания (грипп, ОРВИ, простуда, повышенная температура).</li>
+                            <li>Татуировка в зоне проведения процедуры.</li>
+                            <li>Миома матки (вне обострения).</li>
+                            <li>Артериальная гипертония.</li>
+                            <li>Заболевания кожи (псориаз, витилиго, атопический дерматит, герпес).</li>
+                            <li>Гормональные нарушения (поликистоз, гирсутизм).</li>
+                            <li>Наличие ран, ссадин или ожогов в зоне процедуры.</li>
+                            <li>Пациенты младше 18 лет (требуется согласие родителей).</li>
+                            <li>Множество родимых пятен и родинок в зоне процедуры.</li>
+                        </ul>
+                    </div>
+
+                    <!-- ===== 5. ПОЛИТИКА COOKIE ===== -->
+                    <div class="legal-section">
+                        <h4>🍪 Политика использования cookie</h4>
+                        <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
+                        <p>Сайт BeLove использует файлы cookie для улучшения работы сайта и аналитики посещаемости.</p>
+
+                        <p><strong>Что такое cookie?</strong> Cookie — это небольшие текстовые файлы, которые сохраняются на вашем устройстве при посещении сайта. Они помогают нам запоминать ваши предпочтения и делать сайт более удобным.</p>
+
+                        <p><strong>Какие cookie мы используем:</strong></p>
+                        <ul>
+                            <li><strong>Технические cookie:</strong> необходимые для корректной работы сайта.</li>
+                            <li><strong>Аналитические cookie:</strong> для сбора статистики о посещениях (Яндекс.Метрика).</li>
+                            <li><strong>Функциональные cookie:</strong> для запоминания ваших предпочтений.</li>
+                        </ul>
+
+                        <p><strong>Управление cookie:</strong> Вы можете управлять настройками cookie в вашем браузере. Отключение cookie может ограничить функциональность сайта.</p>
+
+                        <div class="highlight-box">
+                            <p><strong>Продолжая использовать сайт, вы соглашаетесь с использованием cookie.</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- ===== 6. ОБРАБОТКА ПЕРСОНАЛЬНЫХ ДАННЫХ + ИНН ===== -->
+                    <div class="legal-section" style="border-bottom: none;">
+                        <h4>📋 Обработка персональных данных</h4>
+                        <p>Студия BeLove обрабатывает персональные данные в соответствии с Федеральным законом РФ «О персональных данных» № 152-ФЗ.</p>
+
+                        <p><strong>ИНН:</strong> 323002104812</p>
+
+                        <div class="legal-checkbox">
+                            <input type="checkbox" id="consentData" checked>
+                            <label for="consentData">
+                                Я даю свое согласие на обработку моих персональных данных в соответствии с политикой конфиденциальности BeLove.
+                            </label>
+                        </div>
+
+                        <div class="legal-checkbox">
+                            <input type="checkbox" id="consentMessenger" checked>
+                            <label for="consentMessenger">
+                                Я согласен(на) на общение в мессенджерах (WhatsApp, Telegram) и подтверждаю, что ознакомлен(а) с политикой обработки данных.
+                            </label>
+                        </div>
+
+                        <p style="font-size:12px; color:#999; margin-top:12px;">
+                            * Ссылки на мессенджеры предназначены для коммуникации студии с клиентами, которые предоставили 
+                            в письменном виде свое согласие на обработку их персональных данных и на использование 
+                            соответствующих мессенджеров. Переходя по ссылке на общение в данных мессенджерах при отсутствии 
+                            действующего соответствующего согласия от клиента, любая ответственность за это возлагается на 
+                            самого клиента.
+                        </p>
+                    </div>
+
+                </div><!-- /legal-body -->
+            </div><!-- /legal-wrapper -->
+        </div>
+    </section>
+
+    <!-- ============================================================
+               ФУТЕР
+               ============================================================ -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <img src="logo.png" alt="BeLove" class="footer-logo-img" onerror="this.style.display='none'">
+                    <p>Студия лазерной эпиляции для женщин, которые выбирают заботу о себе.</p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/79996208376" target="_blank" aria-label="WhatsApp">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                        </a>
+                        <a href="https://t.me/alina1467" target="_blank" aria-label="Telegram">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Разделы</h4>
+                    <ul>
+                        <li><a href="#why">О нас</a></li>
+                        <li><a href="#price">Цены</a></li>
+                        <li><a href="#packages">Пакеты</a></li>
+                        <li><a href="#certificates">Сертификаты</a></li>
+                        <li><a href="#reviews">Отзывы</a></li>
+                        <li><a href="#faq">Вопросы</a></li>
+                        <li><a href="#contacts">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Информация</h4>
+                    <ul>
+                        <li><a href="#" onclick="document.getElementById('legalBody').classList.add('open'); document.getElementById('legalArrow').classList.add('open'); document.querySelector('.legal-wrapper').scrollIntoView({behavior:'smooth'}); return false;">Противопоказания</a></li>
+                        <li><a href="#" onclick="document.getElementById('legalBody').classList.add('open'); document.getElementById('legalArrow').classList.add('open'); document.querySelector('.legal-wrapper').scrollIntoView({behavior:'smooth'}); return false;">Политика конфиденциальности</a></li>
+                        <li><a href="#" onclick="document.getElementById('legalBody').classList.add('open'); document.getElementById('legalArrow').classList.add('open'); document.querySelector('.legal-wrapper').scrollIntoView({behavior:'smooth'}); return false;">Обработка данных</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><a href="https://yandex.ru/maps/?text=Ленинский+проспект+41/2" target="_blank">📍 Ленинский проспект 41/2</a></li>
+                        <li>📞 <a href="tel:+79996208376">+7 999 620 8376</a></li>
+                        <li>💬 <a href="https://wa.me/79996208376" target="_blank">WhatsApp</a></li>
+                        <li>📩 <a href="https://t.me/alina1467" target="_blank">Telegram @alina1467</a></li>
+                        <li>🕐 Ежедневно, 9:00–21:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ===== НИЖНЯЯ СТРОКА ФУТЕРА (ИНН + РАЗРАБОТЧИК) ===== -->
+            <div class="footer-bottom">
+                <span>© 2026 BeLove. Все права защищены.</span>
+                <span><strong>ИНН:</strong> 323002104812</span>
+                <span><a href="https://yandex.ru/maps/?text=Ленинский+проспект+41/2" target="_blank">Построить маршрут 🗺️</a></span>
+                <span><a href="#" onclick="document.getElementById('legalBody').classList.add('open'); document.getElementById('legalArrow').classList.add('open'); document.querySelector('.legal-wrapper').scrollIntoView({behavior:'smooth'}); return false;">Политика конфиденциальности</a></span>
+                <span class="developer">💻 Сайт разработан: <strong>Ahmed</strong> | 📞 <a href="tel:+89999206065">8 999 920 6065</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+               WHATSAPP FLOAT
+               ============================================================ -->
+    <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="whatsapp-float" aria-label="Написать в WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+    </a>
+
+    <!-- ============================================================
+               COOKIE БАННЕР
+               ============================================================ -->
+    <div class="cookie-banner" id="cookieBanner">
+        <p>
+            🍪 Мы используем файлы cookie для улучшения работы сайта.
+            <a href="#" onclick="document.getElementById('legalBody').classList.add('open'); document.getElementById('legalArrow').classList.add('open'); document.querySelector('.legal-wrapper').scrollIntoView({behavior:'smooth'}); return false;">Подробнее</a>
+        </p>
+        <button class="btn-cookie" onclick="acceptCookies()">Принять</button>
+    </div>
+
+    <!-- ============================================================
+               СКРИПТЫ
+               ============================================================ -->
+    <script>
+        // ============================================================
+        // ДАННЫЕ
+        // ============================================================
+        const zones = [
+            { name: "Верхняя губа", price: 550 },
+            { name: "Подбородок", price: 550 },
+            { name: "Лоб", price: 550 },
+            { name: "Бакенбарды", price: 650 },
+            { name: "Ареолы", price: 550 },
+            { name: "Бёдра", price: 2490 },
+            { name: "Линия живота", price: 550 },
+            { name: "Спина", price: 2990 },
+            { name: "Ягодицы", price: 1690 },
+            { name: "Бикини классическое", price: 1290 },
+            { name: "Бикини глубокое", price: 2290 },
+            { name: "Голени", price: 2290 },
+            { name: "Живот", price: 1490 },
+            { name: "Кисти рук", price: 550 },
+            { name: "Подмышки", price: 1290 },
+            { name: "Руки до локтя", price: 1390 },
+            { name: "Руки выше локтя", price: 1390 }
+        ];
+
+        const packagesData = [
+            { name: "Подмышки + Бикини", price: 2990 },
+            { name: "Подмышки + Голени", price: 2990 },
+            { name: "Подмышки + Бикини + Голени", price: 4990 },
+            { name: "Бикини + Голени", price: 3990 },
+            { name: "Подмышки + Ноги полностью", price: 4790 },
+            { name: "Подмышки + Бикини + Ноги полностью", price: 5990 },
+            { name: "Подмышки + Бикини + Ноги полностью + Руки ниже локтя", price: 6990 },
+            { name: "Всё тело", price: 8990, featured: true }
+        ];
+
+        const certs = [
+            { value: 1000, desc: "Пробная зона", icon: "🎀" },
+            { value: 3000, desc: "2–3 зоны", icon: "🌸" },
+            { value: 5000, desc: "Комплекс зон", icon: "💝" },
+            { value: 10000, desc: "Всё тело", icon: "👑" }
+        ];
+
+        const reviews = [
+            { text: "Процедура прошла очень комфортно! Мастер внимательная, всё объяснила. Кожа гладкая уже после первого раза! ❤️", author: "Анна" },
+            { text: "Ходила на бикини и подмышки. Почти не больно благодаря охлаждению. Результат супер! Спасибо BeLove.", author: "Екатерина" },
+            { text: "Уютная студия, приятная атмосфера. Лазер нового поколения — реально без боли. Буду ходить ещё!", author: "Мария" }
+        ];
+
+        const faqs = [
+            { q: "Насколько больно?", a: "Благодаря системе охлаждения дискомфорт минимален. Многие клиентки описывают ощущения как лёгкое покалывание." },
+            { q: "Сколько нужно сеансов?", a: "В среднем 6–8 процедур с интервалом 4–6 недель." },
+            { q: "Когда виден результат?", a: "Первые изменения заметны после 1–2 процедур." },
+            { q: "Можно ли делать летом?", a: "Да, диодный лазер безопасен, но нужен SPF." },
+            { q: "Подходит для смуглой кожи?", a: "Да, лазер имеет несколько настроек." },
+            { q: "Как подготовиться?", a: "За 2–3 дня побрейте зону. Исключите загар." }
+        ];
+
+        // ============================================================
+        // РЕНДЕР
+        // ============================================================
+        // Прайс
+        const tbody = document.getElementById('priceTableBody');
+        zones.forEach(z => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td class="zone">${z.name}</td><td class="cost">${z.price.toLocaleString('ru-RU')} ₽</td>`;
+            tbody.appendChild(tr);
+        });
+
+        // Пакеты
+        const pGrid = document.getElementById('packagesGrid');
+        packagesData.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'package-card' + (p.featured ? ' featured' : '');
+            card.innerHTML = `
+                        ${p.featured ? '<span class="featured-tag">⭐ Хит продаж</span>' : ''}
+                        <h3>${p.name}</h3>
+                        <div class="package-price">
+                            <span class="amount">${p.price.toLocaleString('ru-RU')}</span>
+                            <span>₽ / за курс</span>
+                        </div>
+                    `;
+            pGrid.appendChild(card);
+        });
+
+        // Сертификаты
+        const cGrid = document.getElementById('certGrid');
+        certs.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'cert-card';
+            const msg = encodeURIComponent(`Здравствуйте! Хочу купить подарочный сертификат на ${c.value} ₽`);
+            card.innerHTML = `
+                        <div class="cert-icon">${c.icon}</div>
+                        <div class="cert-value">${c.value.toLocaleString('ru-RU')} ₽</div>
+                        <div class="cert-desc">${c.desc}</div>
+                        <a href="https://wa.me/79996208376?text=${msg}" target="_blank" class="btn btn-whatsapp" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:50px;font-weight:700;font-size:13.5px;background:#25D366;color:#fff;text-decoration:none;width:100%;">💬 Купить</a>
+                    `;
+            cGrid.appendChild(card);
+        });
+
+        // Отзывы
+        const rGrid = document.getElementById('reviewsGrid');
+        reviews.forEach(r => {
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = `
+                        <div class="review-stars">★★★★★</div>
+                        <div class="review-text">"${r.text}"</div>
+                        <div class="review-author">— ${r.author}</div>
+                    `;
+            rGrid.appendChild(card);
+        });
+
+        // FAQ
+        const fGrid = document.getElementById('faqGrid');
+        faqs.forEach((f) => {
+            const item = document.createElement('div');
+            item.className = 'faq-item';
+            item.innerHTML = `
+                        <div class="question">
+                            ${f.q}
+                            <span class="icon">▾</span>
+                        </div>
+                        <div class="answer">${f.a}</div>
+                    `;
+            item.addEventListener('click', () => item.classList.toggle('open'));
+            fGrid.appendChild(item);
+        });
+
+        // ============================================================
+        // МЕНЮ
+        // ============================================================
+        document.getElementById('burgerBtn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        // ============================================================
+        // ЧАСТИЦЫ
+        // ============================================================
+        (function() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 45; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = 2 + Math.random() * 8;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (20 + Math.random() * 30) + 's';
+                p.style.animationDelay = (Math.random() * 30) + 's';
+                p.style.opacity = 0.1 + Math.random() * 0.4;
+                container.appendChild(p);
+            }
+        })();
+
+        // ============================================================
+        // ЮРИДИЧЕСКИЙ АККОРДЕОН
+        // ============================================================
+        function toggleLegal() {
+            const body = document.getElementById('legalBody');
+            const arrow = document.getElementById('legalArrow');
+            body.classList.toggle('open');
+            arrow.classList.toggle('open');
+        }
+
+        // ============================================================
+        // COOKIE
+        // ============================================================
+        function acceptCookies() {
+            document.getElementById('cookieBanner').classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'true');
+        }
+
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookieBanner').classList.add('show');
+        }
+    </script>
+
+</body>
+</html>

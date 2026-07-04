@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Противопоказания — BeLove</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ПЕРЕМЕННЫЕ ===== */
+        :root {
+            --gold: #c9a96e;
+            --gold-deep: #b08d4f;
+            --gold-light: #e8d5b5;
+            --pink-light: #fce4ec;
+            --pink-mid: #f8bbd0;
+            --cream: #fffaf8;
+            --white: #ffffff;
+            --text-dark: #3d2c3b;
+            --text-muted: #8a7676;
+            --shadow-premium: 0 25px 60px rgba(176, 141, 79, 0.3);
+            --radius-premium: 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-dark);
+            background: var(--cream);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== 3D-ФОН ===== */
+        .sphere-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .sphere {
+            position: absolute;
+            border-radius: 50%;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+            backdrop-filter: blur(60px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .sphere-1 {
+            width: 700px;
+            height: 700px;
+            top: -250px;
+            right: -200px;
+            background: radial-gradient(circle at 25% 25%, rgba(201, 169, 110, 0.3), rgba(248, 187, 208, 0.06));
+            animation: sphere3D_1 28s ease-in-out infinite;
+        }
+
+        .sphere-2 {
+            width: 550px;
+            height: 550px;
+            bottom: -150px;
+            left: -150px;
+            background: radial-gradient(circle at 70% 70%, rgba(248, 187, 208, 0.25), rgba(201, 169, 110, 0.04));
+            animation: sphere3D_2 32s ease-in-out infinite;
+        }
+
+        .sphere-3 {
+            width: 450px;
+            height: 450px;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(20deg);
+            background: radial-gradient(circle at 50% 50%, rgba(232, 213, 181, 0.15), rgba(252, 228, 236, 0.02));
+            animation: sphere3D_3 24s ease-in-out infinite;
+        }
+
+        .sphere-4 {
+            width: 350px;
+            height: 350px;
+            top: 10%;
+            left: 5%;
+            background: radial-gradient(circle at 60% 40%, rgba(201, 169, 110, 0.12), rgba(248, 187, 208, 0.02));
+            animation: sphere3D_4 20s ease-in-out infinite;
+        }
+
+        @keyframes sphere3D_1 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg) rotateX(0deg) rotateY(0deg); }
+            25% { transform: translate(-100px,60px) scale(1.15) rotate(8deg) rotateX(10deg) rotateY(-5deg); }
+            50% { transform: translate(80px,-50px) scale(0.9) rotate(-6deg) rotateX(-8deg) rotateY(8deg); }
+            75% { transform: translate(-60px,-80px) scale(1.05) rotate(4deg) rotateX(5deg) rotateY(-10deg); }
+        }
+
+        @keyframes sphere3D_2 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg) rotateX(0deg) rotateY(0deg); }
+            30% { transform: translate(120px,-70px) scale(1.1) rotate(-7deg) rotateX(-12deg) rotateY(6deg); }
+            60% { transform: translate(-80px,60px) scale(0.85) rotate(9deg) rotateX(8deg) rotateY(-7deg); }
+            85% { transform: translate(60px,90px) scale(1.08) rotate(-4deg) rotateX(-6deg) rotateY(12deg); }
+        }
+
+        @keyframes sphere3D_3 {
+            0%, 100% { transform: translate(-50%,-50%) scale(1) rotate(0deg) rotateX(20deg) rotateY(0deg); }
+            50% { transform: translate(-50%,-55%) scale(1.12) rotate(6deg) rotateX(10deg) rotateY(15deg); }
+        }
+
+        @keyframes sphere3D_4 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
+            33% { transform: translate(40px,-30px) scale(1.2) rotate(12deg); }
+            66% { transform: translate(-30px,40px) scale(0.8) rotate(-8deg); }
+        }
+
+        /* ===== ЧАСТИЦЫ ===== */
+        .particles-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 800px;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f0d5a0, var(--gold-deep));
+            opacity: 0;
+            box-shadow: 0 0 30px rgba(201, 169, 110, 0.4);
+            animation: particle3D linear infinite;
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+        }
+
+        .particle:nth-child(odd) { background: radial-gradient(circle at 30% 30%, #ffd6b0, #c9a96e); }
+        .particle:nth-child(3n) { background: radial-gradient(circle at 30% 30%, #fce4ec, #e8a0b8); box-shadow: 0 0 30px rgba(248,187,208,0.3); }
+
+        @keyframes particle3D {
+            0% { transform: translateY(100vh) scale(0) rotate(0deg) translateX(0) translateZ(0px); opacity: 0; }
+            8% { opacity: 0.8; transform: translateY(90vh) scale(0.6) rotate(20deg) translateX(10px) translateZ(30px); }
+            50% { opacity: 0.5; transform: translateY(50vh) scale(1) rotate(360deg) translateX(-30px) translateZ(60px); }
+            92% { opacity: 0.6; transform: translateY(10vh) scale(0.7) rotate(720deg) translateX(20px) translateZ(20px); }
+            100% { transform: translateY(-10vh) scale(0) rotate(900deg) translateX(-10px) translateZ(0px); opacity: 0; }
+        }
+
+        /* ===== ШАПКА ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 250, 248, 0.88);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+            transform-style: preserve-3d;
+        }
+
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+
+        .logo-img {
+            height: 72px;
+            width: auto;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            object-fit: contain;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.05));
+        }
+
+        .logo-img:hover {
+            transform: scale(1.06) rotateY(-3deg) translateZ(10px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-size: 14.5px;
+            font-weight: 600;
+        }
+
+        .nav-links a {
+            position: relative;
+            padding: 4px 0;
+            transition: color 0.3s ease;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: var(--gold-deep);
+            transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .nav-links a:hover { color: var(--gold-deep); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-phone a {
+            font-weight: 800;
+            font-size: 15.5px;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-phone span {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+            text-align: right;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(176, 141, 79, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.03) translateZ(10px);
+            box-shadow: 0 20px 45px rgba(176, 141, 79, 0.5);
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .burger span {
+            width: 26px;
+            height: 2px;
+            background: var(--text-dark);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== ГЕРОЙ СТРАНИЦЫ ===== */
+        .page-hero {
+            position: relative;
+            z-index: 1;
+            padding: 140px 0 60px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .page-hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            background: linear-gradient(145deg, #2d1f2b 0%, #4a2f3a 30%, #6b4a5a 60%, #8a6a7a 85%, #c9a96e 100%);
+        }
+
+        .page-hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(176, 141, 79, 0.2), transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(248, 187, 208, 0.12), transparent 40%),
+                linear-gradient(135deg, rgba(61, 44, 59, 0.3) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(36px, 4.5vw, 52px);
+            color: #fff;
+            text-shadow: 0 4px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 12px;
+        }
+
+        .page-hero p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 17px;
+        }
+
+        /* ===== КОНТЕНТ ===== */
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 60px 0 100px;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-premium);
+            padding: 48px 44px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .content-card h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .content-card .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .content-card h3 {
+            font-size: 20px;
+            margin: 24px 0 12px;
+            color: var(--gold-deep);
+        }
+
+        .content-card h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .content-card p {
+            font-size: 15.5px;
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .content-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 16px;
+        }
+
+        .content-card ul li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 15px;
+            color: var(--text-dark);
+            line-height: 1.6;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.06);
+        }
+
+        .content-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .content-card ul li::before {
+            content: '•';
+            position: absolute;
+            left: 4px;
+            color: var(--gold-deep);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .content-card ul li strong {
+            color: var(--gold-deep);
+        }
+
+        .highlight-box {
+            background: rgba(217, 138, 138, 0.06);
+            border-left: 4px solid #d98a8a;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin: 16px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 15px;
+        }
+
+        .highlight-box strong {
+            color: var(--text-dark);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(176, 141, 79, 0.35);
+            margin-top: 30px;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 20px 45px rgba(176, 141, 79, 0.5);
+        }
+
+        /* ===== ФУТЕР ===== */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(61, 47, 47, 0.92);
+            backdrop-filter: blur(24px);
+            color: #f4e9e9;
+            padding: 40px 0 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-inner a {
+            color: var(--gold-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-inner a:hover {
+            color: var(--gold);
+        }
+
+        .footer-inner span {
+            color: #a89494;
+            font-size: 14px;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 980px) {
+            .nav-links {
+                display: none;
+            }
+            .nav-phone {
+                display: none;
+            }
+            .burger {
+                display: flex;
+            }
+            .content-card {
+                padding: 30px 24px;
+            }
+            .nav-links.open {
+                display: flex !important;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 250, 248, 0.98);
+                backdrop-filter: blur(24px);
+                flex-direction: column;
+                padding: 24px 30px;
+                gap: 18px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+                border-bottom: 1px solid rgba(201, 169, 110, 0.08);
+            }
+            .burger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .burger.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .burger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .content-card {
+                padding: 24px 18px;
+            }
+            .content-card h2 {
+                font-size: 22px;
+            }
+            .content-card h3 {
+                font-size: 18px;
+            }
+            .content-card p,
+            .content-card ul li {
+                font-size: 14px;
+            }
+            .page-hero {
+                padding: 110px 0 40px;
+            }
+            .page-hero h1 {
+                font-size: 28px;
+            }
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo-img {
+                height: 52px;
+            }
+            .burger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 3D-ФОН ===== -->
+    <div class="sphere-overlay">
+        <div class="sphere sphere-1"></div>
+        <div class="sphere sphere-2"></div>
+        <div class="sphere sphere-3"></div>
+        <div class="sphere sphere-4"></div>
+    </div>
+    <div class="particles-container" id="particles"></div>
+
+    <!-- ===== ШАПКА ===== -->
+    <header>
+        <div class="nav-wrap">
+            <a href="index.html">
+                <img src="Logo.png" alt="BeLove" class="logo-img" onerror="this.style.display='none'">
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Главная</a>
+                <a href="legal.html">Юр. информация</a>
+                <a href="protivopokazaniya.html" style="color:var(--gold-deep);font-weight:700;">Противопоказания</a>
+            </nav>
+            <div class="nav-cta">
+                <div class="nav-phone">
+                    <span>Звоните нам</span>
+                    <a href="tel:+79996208376">+7 999 620 8376</a>
+                </div>
+                <a href="index.html#contacts" class="btn btn-primary">Записаться</a>
+                <div class="burger" id="burgerBtn">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРОЙ ===== -->
+    <section class="page-hero">
+        <div class="page-hero-bg"></div>
+        <div class="container">
+            <div class="page-hero-content">
+                <h1>⚠️ Противопоказания</h1>
+                <p>К лазерной эпиляции в студии BeLove</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== КОНТЕНТ ===== -->
+    <section class="content">
+        <div class="container">
+            <div class="content-card">
+
+                <div class="highlight-box">
+                    <p><strong>На указанные на настоящем сайте услуги могут быть противопоказания, необходима консультация специалиста.</strong></p>
+                </div>
+
+                <p style="font-size:14px; color:var(--text-muted);"><strong>Актуально на:</strong> 04 июля 2026 г.</p>
+
+                <h3>Абсолютные противопоказания</h3>
+                <ul>
+                    <li><strong>Системные заболевания:</strong> сахарный диабет, ВИЧ, СПИД.</li>
+                    <li><strong>Онкологические заболевания</strong> любой локализации.</li>
+                    <li><strong>Неврологические заболевания:</strong> эпилепсия.</li>
+                    <li><strong>Психические расстройства:</strong> шизофрения.</li>
+                    <li><strong>Беременность</strong> на любом сроке.</li>
+                    <li><strong>Грудное вскармливание</strong> (до 6 месяцев).</li>
+                    <li><strong>Болезни крови:</strong> нарушение свертываемости.</li>
+                    <li><strong>Тромбофлебит</strong> и варикоз в прогрессирующей стадии.</li>
+                    <li><strong>Свежий загар</strong> (от 1 до 2 недель до процедуры).</li>
+                </ul>
+
+                <h3>Относительные противопоказания</h3>
+                <ul>
+                    <li>Острые респираторные заболевания (грипп, ОРВИ, простуда, повышенная температура).</li>
+                    <li>Татуировка в зоне проведения процедуры.</li>
+                    <li>Миома матки (вне обострения).</li>
+                    <li>Артериальная гипертония.</li>
+                    <li>Заболевания кожи (псориаз, витилиго, атопический дерматит, герпес).</li>
+                    <li>Гормональные нарушения (поликистоз, гирсутизм).</li>
+                    <li>Наличие ран, ссадин или ожогов в зоне процедуры.</li>
+                    <li>Пациенты младше 18 лет (требуется согласие родителей).</li>
+                    <li>Множество родимых пятен и родинок в зоне процедуры.</li>
+                </ul>
+
+                <div style="text-align:center; margin-top:32px;">
+                    <a href="index.html" class="btn-back">← Вернуться на главную</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <span>© 2026 BeLove. Все права защищены.</span>
+                <a href="index.html">Главная</a>
+                <a href="legal.html">Юридическая информация</a>
+                <a href="protivopokazaniya.html" style="color:var(--gold);font-weight:600;">Противопоказания</a>
+                <span><a href="https://yandex.ru/maps/?text=Ленинский+проспект+41/2" target="_blank" style="color:var(--gold-light);">📍 Ленинский проспект 41/2</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* ===== МЕНЮ ===== */
+        document.getElementById('burgerBtn').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        /* ===== ЧАСТИЦЫ ===== */
+        (function() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 45; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = 2 + Math.random() * 8;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (20 + Math.random() * 30) + 's';
+                p.style.animationDelay = (Math.random() * 30) + 's';
+                p.style.opacity = 0.1 + Math.random() * 0.4;
+                container.appendChild(p);
+            }
+        })();
+    </script>
+</body>
+</html>

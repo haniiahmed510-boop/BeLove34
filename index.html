@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BeLove — Студия лазерной эпиляции</title>
+    <meta property="og:url" content="https://belovela.ru/">
+    <link rel="canonical" href="https://belovela.ru/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ============================================================
                    ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
@@ -36,17 +38,15 @@
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-dark);
             background: var(--cream);
             line-height: 1.7;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            letter-spacing: 0.3px;
+        h1, h2, h3, h4, p, a, span, div, button, input, li, .btn, .nav-links, .hero-badge, .hero-stats .stat .label, .why-card h3, .why-card p, .step-card h4, .step-card p, .price-table td, .package-card h3, .package-price .amount, .cert-value, .cert-desc, .review-text, .review-author, .faq-item .question, .faq-item .answer, .contact-card h3, .contact-card a, .contact-card p, .legal-section h4, .legal-section p, .legal-section ul li, .footer-grid p, .footer-col h4, .footer-col a, .footer-bottom span, .footer-bottom a {
+            font-family: 'Inter', sans-serif;
         }
 
         .container {
@@ -58,137 +58,125 @@
         }
 
         /* ============================================================
-                   3D-ФОН И ЧАСТИЦЫ
+                   3D-ЭФФЕКТЫ
                    ============================================================ */
-        .sphere-overlay {
+        .floating-shapes {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
 
-        .sphere {
+        .shape {
             position: absolute;
             border-radius: 50%;
-            will-change: transform, opacity;
-            transform-style: preserve-3d;
-            backdrop-filter: blur(60px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            will-change: transform;
+            opacity: 0.15;
+            filter: blur(2px);
         }
 
-        .sphere-1 {
-            width: 700px;
-            height: 700px;
-            top: -250px;
-            right: -200px;
-            background: radial-gradient(circle at 25% 25%, rgba(201, 169, 110, 0.3), rgba(248, 187, 208, 0.06));
-            animation: sphere3D_1 28s ease-in-out infinite;
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            top: -120px;
+            right: -80px;
+            background: radial-gradient(circle at 30% 30%, #c9a96e, #f8bbd0);
+            animation: floatShape1 20s ease-in-out infinite;
         }
 
-        .sphere-2 {
-            width: 550px;
-            height: 550px;
-            bottom: -150px;
-            left: -150px;
-            background: radial-gradient(circle at 70% 70%, rgba(248, 187, 208, 0.25), rgba(201, 169, 110, 0.04));
-            animation: sphere3D_2 32s ease-in-out infinite;
-        }
-
-        .sphere-3 {
-            width: 450px;
-            height: 450px;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotateX(20deg);
-            background: radial-gradient(circle at 50% 50%, rgba(232, 213, 181, 0.15), rgba(252, 228, 236, 0.02));
-            animation: sphere3D_3 24s ease-in-out infinite;
-        }
-
-        .sphere-4 {
+        .shape-2 {
             width: 350px;
             height: 350px;
-            top: 10%;
-            left: 5%;
-            background: radial-gradient(circle at 60% 40%, rgba(201, 169, 110, 0.12), rgba(248, 187, 208, 0.02));
-            animation: sphere3D_4 20s ease-in-out infinite;
+            bottom: -50px;
+            left: -60px;
+            background: radial-gradient(circle at 70% 70%, #f8bbd0, #c9a96e);
+            animation: floatShape2 25s ease-in-out infinite;
         }
 
-        @keyframes sphere3D_1 {
-            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg) rotateX(0deg) rotateY(0deg); }
-            25% { transform: translate(-100px,60px) scale(1.15) rotate(8deg) rotateX(10deg) rotateY(-5deg); }
-            50% { transform: translate(80px,-50px) scale(0.9) rotate(-6deg) rotateX(-8deg) rotateY(8deg); }
-            75% { transform: translate(-60px,-80px) scale(1.05) rotate(4deg) rotateX(5deg) rotateY(-10deg); }
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at 50% 50%, #e8d5b5, #fce4ec);
+            animation: floatShape3 18s ease-in-out infinite;
         }
 
-        @keyframes sphere3D_2 {
-            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg) rotateX(0deg) rotateY(0deg); }
-            30% { transform: translate(120px,-70px) scale(1.1) rotate(-7deg) rotateX(-12deg) rotateY(6deg); }
-            60% { transform: translate(-80px,60px) scale(0.85) rotate(9deg) rotateX(8deg) rotateY(-7deg); }
-            85% { transform: translate(60px,90px) scale(1.08) rotate(-4deg) rotateX(-6deg) rotateY(12deg); }
+        .shape-4 {
+            width: 120px;
+            height: 120px;
+            top: 15%;
+            right: 15%;
+            background: radial-gradient(circle at 60% 40%, #fce4ec, #c9a96e);
+            animation: floatShape4 15s ease-in-out infinite;
         }
 
-        @keyframes sphere3D_3 {
-            0%, 100% { transform: translate(-50%,-50%) scale(1) rotate(0deg) rotateX(20deg) rotateY(0deg); }
-            50% { transform: translate(-50%,-55%) scale(1.12) rotate(6deg) rotateX(10deg) rotateY(15deg); }
+        .shape-5 {
+            width: 180px;
+            height: 180px;
+            bottom: 20%;
+            right: 20%;
+            background: radial-gradient(circle at 40% 60%, #c9a96e, #f8bbd0);
+            animation: floatShape5 22s ease-in-out infinite;
         }
 
-        @keyframes sphere3D_4 {
+        @keyframes floatShape1 {
             0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
-            33% { transform: translate(40px,-30px) scale(1.2) rotate(12deg); }
-            66% { transform: translate(-30px,40px) scale(0.8) rotate(-8deg); }
+            33% { transform: translate(-60px,40px) scale(1.1) rotate(8deg); }
+            66% { transform: translate(50px,-30px) scale(0.95) rotate(-5deg); }
         }
 
+        @keyframes floatShape2 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
+            33% { transform: translate(50px,-40px) scale(1.08) rotate(-6deg); }
+            66% { transform: translate(-40px,30px) scale(0.92) rotate(8deg); }
+        }
+
+        @keyframes floatShape3 {
+            0%, 100% { transform: translate(-50%,-50%) scale(1) rotate(0deg); }
+            50% { transform: translate(-50%,-55%) scale(1.1) rotate(10deg); }
+        }
+
+        @keyframes floatShape4 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
+            50% { transform: translate(-20px,-30px) scale(1.2) rotate(15deg); }
+        }
+
+        @keyframes floatShape5 {
+            0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
+            33% { transform: translate(30px,20px) scale(1.15) rotate(-10deg); }
+            66% { transform: translate(-20px,-30px) scale(0.9) rotate(12deg); }
+        }
+
+        /* ===== ЗОЛОТЫЕ ЧАСТИЦЫ ===== */
         .particles-container {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            transform-style: preserve-3d;
-            perspective: 800px;
         }
 
         .particle {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #f0d5a0, var(--gold-deep));
+            background: radial-gradient(circle, var(--gold), var(--gold-deep));
             opacity: 0;
-            box-shadow: 0 0 30px rgba(201, 169, 110, 0.4);
-            animation: particle3D linear infinite;
+            animation: particleFloat linear infinite;
             will-change: transform, opacity;
-            transform-style: preserve-3d;
         }
 
-        .particle:nth-child(odd) {
-            background: radial-gradient(circle at 30% 30%, #ffd6b0, #c9a96e);
-        }
-        .particle:nth-child(3n) {
-            background: radial-gradient(circle at 30% 30%, #fce4ec, #e8a0b8);
-            box-shadow: 0 0 30px rgba(248, 187, 208, 0.3);
-        }
-
-        @keyframes particle3D {
+        @keyframes particleFloat {
             0% {
-                transform: translateY(100vh) scale(0) rotate(0deg) translateX(0) translateZ(0px);
+                transform: translateY(100vh) scale(0) rotate(0deg);
                 opacity: 0;
             }
-            8% {
-                opacity: 0.8;
-                transform: translateY(90vh) scale(0.6) rotate(20deg) translateX(10px) translateZ(30px);
-            }
-            50% {
-                opacity: 0.5;
-                transform: translateY(50vh) scale(1) rotate(360deg) translateX(-30px) translateZ(60px);
-            }
-            92% {
-                opacity: 0.6;
-                transform: translateY(10vh) scale(0.7) rotate(720deg) translateX(20px) translateZ(20px);
-            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
             100% {
-                transform: translateY(-10vh) scale(0) rotate(900deg) translateX(-10px) translateZ(0px);
+                transform: translateY(-10vh) scale(1) rotate(720deg);
                 opacity: 0;
             }
         }
@@ -202,11 +190,11 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(255, 250, 248, 0.88);
-            backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+            background: rgba(255, 250, 248, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(201, 169, 110, 0.1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
-            transform-style: preserve-3d;
+            padding: 8px 0;
         }
 
         .nav-wrap {
@@ -219,7 +207,7 @@
         }
 
         .logo-img {
-            height: 72px;
+            height: 80px;
             width: auto;
             transition: var(--transition);
             object-fit: contain;
@@ -227,7 +215,7 @@
         }
 
         .logo-img:hover {
-            transform: scale(1.06) rotateY(-3deg) translateZ(10px);
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -331,7 +319,6 @@
             text-decoration: none;
             border: none;
             cursor: pointer;
-            transform-style: preserve-3d;
         }
 
         .btn-primary {
@@ -341,7 +328,7 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-4px) scale(1.03) translateZ(10px);
+            transform: translateY(-4px) scale(1.03);
             box-shadow: 0 20px 45px rgba(176, 141, 79, 0.5);
         }
 
@@ -352,7 +339,7 @@
         }
 
         .btn-whatsapp:hover {
-            transform: translateY(-4px) scale(1.03) translateZ(10px);
+            transform: translateY(-4px) scale(1.03);
             box-shadow: 0 18px 38px rgba(37, 211, 102, 0.5);
         }
 
@@ -363,7 +350,7 @@
         }
 
         .btn-tg:hover {
-            transform: translateY(-4px) scale(1.03) translateZ(10px);
+            transform: translateY(-4px) scale(1.03);
             box-shadow: 0 18px 38px rgba(0, 136, 204, 0.5);
         }
 
@@ -393,8 +380,6 @@
             align-items: center;
             padding-top: 80px;
             overflow: hidden;
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
 
         .hero-image-bg {
@@ -402,7 +387,6 @@
             inset: 0;
             z-index: 0;
             overflow: hidden;
-            transform-style: preserve-3d;
             background: linear-gradient(145deg, #2d1f2b 0%, #4a2f3a 30%, #6b4a5a 60%, #8a6a7a 85%, #c9a96e 100%);
         }
 
@@ -443,7 +427,7 @@
             height: 600px;
             top: -200px;
             right: -100px;
-            background: radial-gradient(circle, rgba(201, 169, 110, 0.1), transparent 70%);
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.08), transparent 70%);
             animation: glowPulse 8s ease-in-out infinite;
         }
 
@@ -452,7 +436,7 @@
             height: 400px;
             bottom: -100px;
             left: -50px;
-            background: radial-gradient(circle, rgba(248, 187, 208, 0.08), transparent 70%);
+            background: radial-gradient(circle, rgba(248, 187, 208, 0.06), transparent 70%);
             animation: glowPulse 12s ease-in-out infinite reverse;
         }
 
@@ -487,7 +471,6 @@
             z-index: 3;
             max-width: 700px;
             padding: 40px 0;
-            transform-style: preserve-3d;
         }
 
         .hero-badge {
@@ -503,7 +486,6 @@
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 24px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transform: translateZ(20px);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
         }
 
@@ -519,7 +501,6 @@
             margin-bottom: 16px;
             color: #fff;
             text-shadow: 0 4px 60px rgba(0, 0, 0, 0.3), 0 2px 20px rgba(0, 0, 0, 0.1);
-            transform: translateZ(30px);
         }
 
         .hero h1 span {
@@ -534,7 +515,6 @@
             max-width: 560px;
             margin-bottom: 32px;
             text-shadow: 0 2px 30px rgba(0, 0, 0, 0.15);
-            transform: translateZ(15px);
             line-height: 1.6;
         }
 
@@ -542,7 +522,6 @@
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
-            transform: translateZ(25px);
         }
 
         .hero-stats {
@@ -551,11 +530,9 @@
             margin-top: 48px;
             padding-top: 32px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            transform: translateZ(10px);
         }
 
         .hero-stats .stat .number {
-            font-family: 'Playfair Display', serif;
             font-size: 30px;
             font-weight: 700;
             color: var(--gold-light);
@@ -575,7 +552,6 @@
             position: relative;
             z-index: 1;
             padding: 100px 0;
-            transform-style: preserve-3d;
         }
 
         .section-glass {
@@ -643,13 +619,10 @@
             text-align: center;
             transition: var(--transition);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-            transform-style: preserve-3d;
-            transform: perspective(800px) rotateX(0deg) rotateY(0deg);
-            will-change: transform;
         }
 
         .why-card:hover {
-            transform: perspective(800px) rotateX(4deg) rotateY(6deg) translateZ(20px);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-premium);
             border-color: var(--gold-light);
         }
@@ -665,13 +638,11 @@
             justify-content: center;
             font-size: 30px;
             box-shadow: 0 8px 24px rgba(248, 187, 208, 0.2);
-            transform: translateZ(15px);
         }
 
         .why-card h3 {
             font-size: 20px;
             margin-bottom: 8px;
-            transform: translateZ(10px);
         }
 
         .why-card p {
@@ -696,13 +667,10 @@
             border-radius: var(--radius-premium);
             border: 1px solid rgba(255, 255, 255, 0.12);
             transition: var(--transition);
-            transform-style: preserve-3d;
-            transform: perspective(600px) rotateX(0deg);
-            will-change: transform;
         }
 
         .step-card:hover {
-            transform: perspective(600px) rotateX(3deg) translateZ(15px);
+            transform: translateY(-6px);
             background: rgba(255, 255, 255, 0.55);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
         }
@@ -714,14 +682,12 @@
             border-radius: 50%;
             background: linear-gradient(135deg, var(--gold), var(--gold-deep));
             color: #fff;
-            font-family: 'Playfair Display', serif;
             font-size: 22px;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 8px 24px rgba(176, 141, 79, 0.3);
-            transform: translateZ(20px);
         }
 
         /* ============================================================
@@ -799,7 +765,6 @@
 
         .price-table td.cost {
             text-align: right;
-            font-family: 'Playfair Display', serif;
             font-weight: 700;
             font-size: 18px;
             color: var(--gold-deep);
@@ -824,14 +789,11 @@
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
-            transform-style: preserve-3d;
-            transform: perspective(600px) rotateX(0deg);
-            will-change: transform;
             position: relative;
         }
 
         .package-card:hover {
-            transform: perspective(600px) rotateX(3deg) rotateY(4deg) translateZ(20px);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-premium);
         }
 
@@ -853,7 +815,6 @@
             padding: 8px 18px;
             border-radius: 50px;
             box-shadow: 0 8px 18px rgba(176, 141, 79, 0.4);
-            transform: translateZ(30px);
         }
 
         .package-card h3 {
@@ -871,7 +832,6 @@
         }
 
         .package-price .amount {
-            font-family: 'Playfair Display', serif;
             font-size: 32px;
             font-weight: 700;
             color: var(--gold-deep);
@@ -895,24 +855,19 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             transition: var(--transition);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-            transform-style: preserve-3d;
-            transform: perspective(500px) rotateX(0deg);
-            will-change: transform;
         }
 
         .cert-card:hover {
-            transform: perspective(500px) rotateX(3deg) rotateY(5deg) translateZ(15px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-premium);
         }
 
         .cert-icon {
             font-size: 40px;
             margin-bottom: 12px;
-            transform: translateZ(15px);
         }
 
         .cert-value {
-            font-family: 'Playfair Display', serif;
             font-size: 36px;
             font-weight: 700;
             color: var(--gold-deep);
@@ -940,14 +895,11 @@
             padding: 32px 28px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             transition: var(--transition);
-            transform-style: preserve-3d;
-            transform: perspective(500px) rotateX(0deg);
-            will-change: transform;
             text-align: left;
         }
 
         .review-card:hover {
-            transform: perspective(500px) rotateX(3deg) translateZ(15px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-premium);
         }
 
@@ -991,13 +943,12 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: var(--transition);
             cursor: pointer;
-            transform-style: preserve-3d;
         }
 
         .faq-item:hover {
             border-color: var(--gold-light);
             background: rgba(255, 255, 255, 0.6);
-            transform: translateZ(10px);
+            transform: translateY(-4px);
         }
 
         .faq-item .question {
@@ -1050,13 +1001,10 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             text-align: center;
             transition: var(--transition);
-            transform-style: preserve-3d;
-            transform: perspective(500px) rotateX(0deg);
-            will-change: transform;
         }
 
         .contact-card:hover {
-            transform: perspective(500px) rotateX(3deg) translateZ(15px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-premium);
         }
 
@@ -1322,7 +1270,7 @@
         }
 
         .footer-logo-img {
-            height: 64px;
+            height: 80px;
             width: auto;
             margin-bottom: 14px;
             object-fit: contain;
@@ -1448,22 +1396,21 @@
             text-decoration: none;
             font-size: 32px;
             color: #fff;
-            transform-style: preserve-3d;
         }
 
         .whatsapp-float:hover {
-            transform: scale(1.12) translateZ(20px);
+            transform: scale(1.12);
             box-shadow: 0 20px 45px rgba(37, 211, 102, 0.6);
         }
 
         @keyframes waPulse3D {
             0%, 100% {
                 box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
-                transform: scale(1) translateZ(0);
+                transform: scale(1);
             }
             50% {
                 box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45), 0 0 0 16px rgba(37, 211, 102, 0.1);
-                transform: scale(1.05) translateZ(10px);
+                transform: scale(1.05);
             }
         }
 
@@ -1614,10 +1561,10 @@
                 padding: 12px 16px;
             }
             .logo-img {
-                height: 52px;
+                height: 60px;
             }
             .footer-logo-img {
-                height: 52px;
+                height: 50px;
             }
             .footer-bottom {
                 flex-direction: column;
@@ -1665,16 +1612,21 @@
 </head>
 <body>
 
-    <!-- ===== 3D-ФОН ===== -->
-    <div class="sphere-overlay">
-        <div class="sphere sphere-1"></div>
-        <div class="sphere sphere-2"></div>
-        <div class="sphere sphere-3"></div>
-        <div class="sphere sphere-4"></div>
+    <!-- ============================================================
+               3D-ЭФФЕКТЫ
+               ============================================================ -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
     </div>
     <div class="particles-container" id="particles"></div>
 
-    <!-- ===== ШАПКА ===== -->
+    <!-- ============================================================
+               ШАПКА
+               ============================================================ -->
     <header>
         <div class="nav-wrap">
             <a href="#top">
@@ -1692,12 +1644,12 @@
             <div class="nav-cta">
                 <div class="nav-phone">
                     <span>Звоните нам</span>
-                    <a href="tel:+79996208376">+7 999 620 8376</a>
+                    <a href="tel:+79166438882">+7 916 643 8882</a>
                 </div>
-                <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="social-icon wa" aria-label="WhatsApp">
+                <a href="https://wa.me/79166438882?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="social-icon wa" aria-label="WhatsApp">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
                 </a>
-                <a href="https://t.me/alina1467" target="_blank" class="social-icon tg" aria-label="Telegram">
+                <a href="https://t.me/belovela" target="_blank" class="social-icon tg" aria-label="Telegram">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                 </a>
                 <div class="burger" id="burgerBtn">
@@ -1707,7 +1659,9 @@
         </div>
     </header>
 
-    <!-- ===== ГЕРОЙ ===== -->
+    <!-- ============================================================
+               ГЕРОЙ
+               ============================================================ -->
     <section class="hero" id="top">
         <div class="hero-image-bg">
             <img src="banner.jpg" alt="BeLove баннер" loading="lazy" onerror="this.style.display='none'">
@@ -1720,11 +1674,11 @@
                 <h1>Лазерная эпиляция<br>на диодном аппарате<br><span>нового поколения</span></h1>
                 <p>Благодаря системе охлаждения вы полюбите нашу процедуру с первой минуты.</p>
                 <div class="hero-actions">
-                    <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="btn btn-whatsapp">
+                    <a href="https://wa.me/79166438882?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="btn btn-whatsapp">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
                         Записаться в WhatsApp
                     </a>
-                    <a href="https://t.me/alina1467" target="_blank" class="btn btn-tg">
+                    <a href="https://t.me/belovela" target="_blank" class="btn btn-tg">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                         Связаться в Telegram
                     </a>
@@ -1738,7 +1692,9 @@
         </div>
     </section>
 
-    <!-- ===== 4 ПРИЧИНЫ ===== -->
+    <!-- ============================================================
+               4 ПРИЧИНЫ
+               ============================================================ -->
     <section class="section section-glass" id="why">
         <div class="container">
             <div class="center">
@@ -1771,7 +1727,9 @@
         </div>
     </section>
 
-    <!-- ===== ЭТАПЫ ===== -->
+    <!-- ============================================================
+               ЭТАПЫ
+               ============================================================ -->
     <section class="section" id="steps">
         <div class="container">
             <div class="center">
@@ -1804,7 +1762,9 @@
         </div>
     </section>
 
-    <!-- ===== ПРАЙС ===== -->
+    <!-- ============================================================
+               ПРАЙС
+               ============================================================ -->
     <section class="section section-glass" id="price">
         <div class="container">
             <div class="center">
@@ -1826,7 +1786,9 @@
         </div>
     </section>
 
-    <!-- ===== ПАКЕТЫ ===== -->
+    <!-- ============================================================
+               ПАКЕТЫ
+               ============================================================ -->
     <section class="section" id="packages">
         <div class="container">
             <div class="center">
@@ -1838,7 +1800,9 @@
         </div>
     </section>
 
-    <!-- ===== СЕРТИФИКАТЫ ===== -->
+    <!-- ============================================================
+               СЕРТИФИКАТЫ
+               ============================================================ -->
     <section class="section section-glass" id="certificates">
         <div class="container">
             <div class="center">
@@ -1850,7 +1814,9 @@
         </div>
     </section>
 
-    <!-- ===== ОТЗЫВЫ ===== -->
+    <!-- ============================================================
+               ОТЗЫВЫ
+               ============================================================ -->
     <section class="section" id="reviews">
         <div class="container">
             <div class="center">
@@ -1862,7 +1828,9 @@
         </div>
     </section>
 
-    <!-- ===== FAQ ===== -->
+    <!-- ============================================================
+               FAQ
+               ============================================================ -->
     <section class="section section-glass" id="faq">
         <div class="container">
             <div class="center">
@@ -1874,7 +1842,9 @@
         </div>
     </section>
 
-    <!-- ===== КОНТАКТЫ ===== -->
+    <!-- ============================================================
+               КОНТАКТЫ
+               ============================================================ -->
     <section class="section" id="contacts">
         <div class="container">
             <div class="center">
@@ -1886,83 +1856,71 @@
                 <div class="contact-card">
                     <span class="icon">📞</span>
                     <h3>Телефон</h3>
-                    <a href="tel:+79996208376">+7 999 620 8376</a>
+                    <a href="tel:+79166438882">+7 916 643 8882</a>
                 </div>
                 <div class="contact-card">
                     <span class="icon">📍</span>
                     <h3>Адрес</h3>
-                    <a href="https://yandex.ru/maps/?text=Ленинский+проспект+41/2" target="_blank">Ленинский проспект 41/2</a>
+                    <a href="https://yandex.ru/maps/-/CTRgiGLh" target="_blank">Ленинский проспект 41/2</a>
                     <p>Построить маршрут 🗺️</p>
                 </div>
                 <div class="contact-card">
                     <span class="icon">💬</span>
                     <h3>WhatsApp</h3>
-                    <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank">Написать в WhatsApp</a>
+                    <a href="https://wa.me/79166438882?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank">Написать в WhatsApp</a>
                 </div>
                 <div class="contact-card">
                     <span class="icon">✈️</span>
                     <h3>Telegram</h3>
-                    <a href="https://t.me/alina1467" target="_blank">@alina1467</a>
+                    <a href="https://t.me/belovela" target="_blank">@belovela</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-               ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ (ВНИЗУ СТРАНИЦЫ)
+               ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ + КНОПКА PDF
                ============================================================ -->
     <section class="section" style="padding-top:0;">
         <div class="container">
             <div class="legal-wrapper">
-                <!-- КНОПКА-ЗАГОЛОВОК -->
                 <div class="legal-header" onclick="toggleLegal()">
                     <h3>📜 Юридическая информация</h3>
                     <span class="arrow" id="legalArrow">▾</span>
                 </div>
-
-                <!-- ТЕЛО С ЗАКОНАМИ -->
                 <div class="legal-body" id="legalBody">
-
-                    <!-- ===== 1. ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ ===== -->
                     <div class="legal-section">
                         <h4>🔒 Политика конфиденциальности</h4>
                         <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
                         <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных посетителей сайта BeLove.</p>
-
                         <p><strong>Какие данные мы собираем:</strong></p>
                         <ul>
                             <li><strong>Имя и контактный телефон</strong> — для записи на процедуру и обратной связи.</li>
                             <li><strong>Данные об услугах</strong> — выбранные зоны эпиляции для подбора программы.</li>
                             <li><strong>IP-адрес и данные cookie</strong> — для аналитики и улучшения работы сайта.</li>
                         </ul>
-
                         <p><strong>Как мы используем ваши данные:</strong></p>
                         <ul>
                             <li>Для записи на процедуру и связи с вами.</li>
                             <li>Для информирования о предстоящих визитах и специальных предложениях.</li>
                             <li>Для улучшения качества обслуживания и работы сайта.</li>
                         </ul>
-
                         <p><strong>Передача данных третьим лицам:</strong> Ваши персональные данные не передаются третьим лицам, за исключением случаев, предусмотренных законодательством РФ.</p>
-
                         <p><strong>Ваши права:</strong></p>
                         <ul>
                             <li>Вы можете запросить информацию о своих данных.</li>
                             <li>Вы можете потребовать удалить или изменить свои данные.</li>
                             <li>Вы можете отозвать согласие на обработку данных в любой момент.</li>
                         </ul>
-
                         <div class="highlight-box">
-                            <p><strong>📧 Контакты для вопросов:</strong> +7 999 620 8376 или через мессенджеры.</p>
+                            <p><strong>📧 Контакты для вопросов:</strong> +7 916 643 8882 или через мессенджеры.</p>
                         </div>
                     </div>
 
-                    <!-- ===== 2. СОГЛАСИЕ НА ОБРАБОТКУ ПД ===== -->
                     <div class="legal-section">
                         <h4>✍️ Согласие на обработку персональных данных</h4>
                         <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
                         <p>Отправляя форму на сайте BeLove, вы даете свое <strong>свободное, информированное и однозначное согласие</strong> на обработку своих персональных данных.</p>
-
                         <p><strong>Что вы подтверждаете:</strong></p>
                         <ul>
                             <li>Вы ознакомлены с настоящим согласием и понимаете его условия.</li>
@@ -1970,36 +1928,29 @@
                             <li>Вы соглашаетесь на получение сообщений от BeLove по указанным контактным данным.</li>
                             <li>Вы даете согласие на общение в мессенджерах (WhatsApp, Telegram).</li>
                         </ul>
-
                         <p><strong>Срок действия согласия:</strong> Согласие действует с момента его предоставления и до момента его отзыва в письменной форме.</p>
                     </div>
 
-                    <!-- ===== 3. СОГЛАСИЕ НА ОБЩЕНИЕ В МЕССЕНДЖЕРАХ ===== -->
                     <div class="legal-section">
                         <h4>💬 Согласие на общение в мессенджерах</h4>
                         <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
                         <p>Оставляя свои контактные данные на сайте BeLove, вы соглашаетесь на получение сообщений в мессенджерах <strong>WhatsApp и Telegram</strong>.</p>
-
                         <ul>
                             <li>Сообщения могут содержать информацию о записи, подтверждении визита и специальных предложениях.</li>
                             <li>Вы можете отказаться от получения сообщений в любое время.</li>
                             <li>Ссылки на мессенджеры предназначены для коммуникации с клиентами, которые предоставили письменное согласие.</li>
                         </ul>
-
                         <div class="highlight-box">
                             <p><strong>⚠️ Важно:</strong> Переходя по ссылке на общение в мессенджерах при отсутствии согласия, вся ответственность за это возлагается на клиента.</p>
                         </div>
                     </div>
 
-                    <!-- ===== 4. ПРОТИВОПОКАЗАНИЯ ===== -->
                     <div class="legal-section">
                         <h4>⚠️ Противопоказания к лазерной эпиляции</h4>
                         <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
-
                         <div class="highlight-box" style="border-left-color:#d98a8a; background:rgba(217,138,138,0.06);">
                             <p><strong>На указанные на настоящем сайте услуги могут быть противопоказания, необходима консультация специалиста.</strong></p>
                         </div>
-
                         <p><strong>Абсолютные противопоказания:</strong></p>
                         <ul>
                             <li><strong>Системные заболевания:</strong> сахарный диабет, ВИЧ, СПИД.</li>
@@ -2012,7 +1963,6 @@
                             <li><strong>Тромбофлебит</strong> и варикоз в прогрессирующей стадии.</li>
                             <li><strong>Свежий загар</strong> (от 1 до 2 недель до процедуры).</li>
                         </ul>
-
                         <p><strong>Относительные противопоказания:</strong></p>
                         <ul>
                             <li>Острые респираторные заболевания (грипп, ОРВИ, простуда, повышенная температура).</li>
@@ -2027,49 +1977,39 @@
                         </ul>
                     </div>
 
-                    <!-- ===== 5. ПОЛИТИКА COOKIE ===== -->
                     <div class="legal-section">
                         <h4>🍪 Политика использования cookie</h4>
                         <p><strong>Актуально на:</strong> 04 июля 2026 г.</p>
                         <p>Сайт BeLove использует файлы cookie для улучшения работы сайта и аналитики посещаемости.</p>
-
                         <p><strong>Что такое cookie?</strong> Cookie — это небольшие текстовые файлы, которые сохраняются на вашем устройстве при посещении сайта. Они помогают нам запоминать ваши предпочтения и делать сайт более удобным.</p>
-
                         <p><strong>Какие cookie мы используем:</strong></p>
                         <ul>
                             <li><strong>Технические cookie:</strong> необходимые для корректной работы сайта.</li>
                             <li><strong>Аналитические cookie:</strong> для сбора статистики о посещениях (Яндекс.Метрика).</li>
                             <li><strong>Функциональные cookie:</strong> для запоминания ваших предпочтений.</li>
                         </ul>
-
                         <p><strong>Управление cookie:</strong> Вы можете управлять настройками cookie в вашем браузере. Отключение cookie может ограничить функциональность сайта.</p>
-
                         <div class="highlight-box">
                             <p><strong>Продолжая использовать сайт, вы соглашаетесь с использованием cookie.</strong></p>
                         </div>
                     </div>
 
-                    <!-- ===== 6. ОБРАБОТКА ПЕРСОНАЛЬНЫХ ДАННЫХ + ИНН ===== -->
                     <div class="legal-section" style="border-bottom: none;">
                         <h4>📋 Обработка персональных данных</h4>
                         <p>Студия BeLove обрабатывает персональные данные в соответствии с Федеральным законом РФ «О персональных данных» № 152-ФЗ.</p>
-
                         <p><strong>ИНН:</strong> 323002104812</p>
-
                         <div class="legal-checkbox">
                             <input type="checkbox" id="consentData" checked>
                             <label for="consentData">
                                 Я даю свое согласие на обработку моих персональных данных в соответствии с политикой конфиденциальности BeLove.
                             </label>
                         </div>
-
                         <div class="legal-checkbox">
                             <input type="checkbox" id="consentMessenger" checked>
                             <label for="consentMessenger">
                                 Я согласен(на) на общение в мессенджерах (WhatsApp, Telegram) и подтверждаю, что ознакомлен(а) с политикой обработки данных.
                             </label>
                         </div>
-
                         <p style="font-size:12px; color:#999; margin-top:12px;">
                             * Ссылки на мессенджеры предназначены для коммуникации студии с клиентами, которые предоставили 
                             в письменном виде свое согласие на обработку их персональных данных и на использование 
@@ -2078,9 +2018,16 @@
                             самого клиента.
                         </p>
                     </div>
+                </div>
+            </div>
 
-                </div><!-- /legal-body -->
-            </div><!-- /legal-wrapper -->
+            <!-- ===== КНОПКА СКАЧИВАНИЯ PDF ===== -->
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="politika.pdf" target="_blank" class="btn btn-primary" style="background: linear-gradient(135deg, #c9a96e, #b08d4f); color: #fff; padding: 14px 40px; border-radius: 50px; font-weight: 700; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 24px rgba(176, 141, 79, 0.3); transition: all 0.3s ease;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    📄 Скачать политику конфиденциальности (PDF)
+                </a>
+            </div>
         </div>
     </section>
 
@@ -2094,10 +2041,10 @@
                     <img src="logo.png" alt="BeLove" class="footer-logo-img" onerror="this.style.display='none'">
                     <p>Студия лазерной эпиляции для женщин, которые выбирают заботу о себе.</p>
                     <div class="footer-social">
-                        <a href="https://wa.me/79996208376" target="_blank" aria-label="WhatsApp">
+                        <a href="https://wa.me/79166438882?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" aria-label="WhatsApp">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
                         </a>
-                        <a href="https://t.me/alina1467" target="_blank" aria-label="Telegram">
+                        <a href="https://t.me/belovela" target="_blank" aria-label="Telegram">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                         </a>
                     </div>
@@ -2125,20 +2072,19 @@
                 <div class="footer-col">
                     <h4>Контакты</h4>
                     <ul>
-                        <li><a href="https://yandex.ru/maps/?text=Ленинский+проспект+41/2" target="_blank">📍 Ленинский проспект 41/2</a></li>
-                        <li>📞 <a href="tel:+79996208376">+7 999 620 8376</a></li>
-                        <li>💬 <a href="https://wa.me/79996208376" target="_blank">WhatsApp</a></li>
-                        <li>📩 <a href="https://t.me/alina1467" target="_blank">Telegram @alina1467</a></li>
+                        <li><a href="https://yandex.ru/maps/-/CTRgiGLh" target="_blank">📍 Ленинский проспект 41/2</a></li>
+                        <li>📞 <a href="tel:+79166438882">+7 916 643 8882</a></li>
+                        <li>💬 <a href="https://wa.me/79166438882" target="_blank">WhatsApp</a></li>
+                        <li>📩 <a href="https://t.me/belovela" target="_blank">Telegram @belovela</a></li>
                         <li>🕐 Ежедневно, 9:00–21:00</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- ===== НИЖНЯЯ СТРОКА ФУТЕРА (ИНН + РАЗРАБОТЧИК) ===== -->
             <div class="footer-bottom">
                 <span>© 2026 BeLove. Все права защищены.</span>
                 <span><strong>ИНН:</strong> 323002104812</span>
-                <span><a href="https://yandex.ru/maps/?text=Ленинский+проспект+41/2" target="_blank">Построить маршрут 🗺️</a></span>
+                <span><a href="https://yandex.ru/maps/-/CTRgiGLh" target="_blank">Построить маршрут 🗺️</a></span>
                 <span><a href="#" onclick="document.getElementById('legalBody').classList.add('open'); document.getElementById('legalArrow').classList.add('open'); document.querySelector('.legal-wrapper').scrollIntoView({behavior:'smooth'}); return false;">Политика конфиденциальности</a></span>
                 <span class="developer">💻 Сайт разработан: <strong>Ahmed</strong> | 📞 <a href="tel:+89999206065">8 999 920 6065</a></span>
             </div>
@@ -2148,7 +2094,7 @@
     <!-- ============================================================
                WHATSAPP FLOAT
                ============================================================ -->
-    <a href="https://wa.me/79996208376?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="whatsapp-float" aria-label="Написать в WhatsApp">
+    <a href="https://wa.me/79166438882?text=Здравствуйте!%20Хочу%20записаться%20в%20BeLove" target="_blank" class="whatsapp-float" aria-label="Написать в WhatsApp">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
     </a>
 
@@ -2260,7 +2206,7 @@
                         <div class="cert-icon">${c.icon}</div>
                         <div class="cert-value">${c.value.toLocaleString('ru-RU')} ₽</div>
                         <div class="cert-desc">${c.desc}</div>
-                        <a href="https://wa.me/79996208376?text=${msg}" target="_blank" class="btn btn-whatsapp" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:50px;font-weight:700;font-size:13.5px;background:#25D366;color:#fff;text-decoration:none;width:100%;">💬 Купить</a>
+                        <a href="https://wa.me/79166438882?text=${msg}" target="_blank" class="btn btn-whatsapp" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:50px;font-weight:700;font-size:13.5px;background:#25D366;color:#fff;text-decoration:none;width:100%;">💬 Купить</a>
                     `;
             cGrid.appendChild(card);
         });
@@ -2307,16 +2253,16 @@
         // ============================================================
         (function() {
             const container = document.getElementById('particles');
-            for (let i = 0; i < 45; i++) {
+            for (let i = 0; i < 50; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
-                const size = 2 + Math.random() * 8;
+                const size = 2 + Math.random() * 6;
                 p.style.width = size + 'px';
                 p.style.height = size + 'px';
                 p.style.left = Math.random() * 100 + '%';
-                p.style.animationDuration = (20 + Math.random() * 30) + 's';
-                p.style.animationDelay = (Math.random() * 30) + 's';
-                p.style.opacity = 0.1 + Math.random() * 0.4;
+                p.style.animationDuration = (15 + Math.random() * 25) + 's';
+                p.style.animationDelay = (Math.random() * 20) + 's';
+                p.style.opacity = 0.2 + Math.random() * 0.4;
                 container.appendChild(p);
             }
         })();
